@@ -30,7 +30,7 @@ export default function SideBar() {
           <Avatar
             sx={{ width: 55, height: 55 }}
             alt="Logo"
-            src={require("../images/logo.png")}
+            src={require("../../assets/images/logo.png")}
           />
         }
         title={<Typography variant="h4">RISSC Bank</Typography>}

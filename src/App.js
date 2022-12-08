@@ -1,12 +1,10 @@
 import "./App.css";
-import SideBar from "./components/SideBar";
+import SideBar from "./layouts/SideBar/SideBar";
 
-function App() {
+export default function App() {
   return (
     <div className="App">
       <SideBar />
     </div>
   );
 }
-
-export default App;
