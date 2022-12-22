@@ -75,4 +75,3 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 clone repo
 run npm install
 run npm start
-connect backend and frontend
