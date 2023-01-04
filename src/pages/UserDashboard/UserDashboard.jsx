@@ -56,7 +56,7 @@ function UserDashboard() {
             <Route path="/loans" element={<Loans />} />
             <Route path="/transactions" element={<Transactions />} />
             <Route path="/transfer" element={<Transfer />} />
-            <Route path="/transfer" element={<OnlineLoan />} />
+            <Route path="/onlineloan" element={<OnlineLoan />} />
           </Routes>
         </main>
       </div>

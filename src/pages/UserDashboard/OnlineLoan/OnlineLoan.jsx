@@ -8,11 +8,14 @@ import popAction from "../../../helpers/popAction";
 import apiCrud from "../../../api/apiCrud";
 import useGetUserCurrentAccounts from "../../../hooks/queries/users/useGetUserSavingsAccounts";
 import useGetUserSavingsAccounts from "../../../hooks/queries/users/useGetUserCurrentAccounts";
+import useGetUserFixedDeposits from "../../../hooks/queries/users/useGetUserFixedDeposits";
 
 function OnlineLoan() {
   const {data: s_accounts} = useGetUserSavingsAccounts();
   const {data: c_accounts} = useGetUserCurrentAccounts();
-  const accounts = c_accounts && s_accounts.concat(c_accounts).sort((a, b) => +a.accountNumber - +b.accountNumber);;
+  const accounts = c_accounts && s_accounts.concat(c_accounts).sort((a, b) => +a.accountNumber - +b.accountNumber);
+
+  const {data: fixed_deposits} = useGetUserFixedDeposits();
 
   // handle user inputs
 	const { values, errors, touched, handleBlur, handleChange, handleSubmit} = useFormik({
@@ -21,20 +24,19 @@ function OnlineLoan() {
 			linkedAccountID: '',
 			amount: '',
       period: '',
-      date: '',
 		},
 		validationSchema: onlineLoanSchema,
 		onSubmit: (values)=> { 
       popAction(
         'Are you sure?', 
-        `$${values.amount} will be tranfered from account ${values.fromAccountID} to account ${values.toAccountID}`,
-        'Proceed!',
+        `$A loan of Rs. ${values.amount} will be deposited to account ${values.linkedAccountID}`,
+        'Proceed',
         ()=>apiCrud(`/api/createOnlineLoan`, 'POST', 'Successful transaction', {
-          fromAccountID: values.fromAccountID,
+          fixedDepositID: values.fixedDepositID,
+          linkedAccountID: values.linkedAccountID,
           amount: values.amount,
-          toAccountID: values.toAccountID,
+          period: values.period,
           date: new Date().toISOString().slice(0, 10),
-          remarks: values.remarks,
         })()
       )
 		}
@@ -45,14 +47,14 @@ function OnlineLoan() {
       <form action="/home" onSubmit={handleSubmit}>
 
         <div className="input-holder">
-          <label>Account Number<span style={{color: 'red'}}> (From)</span></label><br/>
+          <label>Linked Fixed Deposit Number</label><br/>
           <select 
-              name="fromAccountID"
-              value={values.fromAccountID}
+              name="fixedDepositID"
+              value={values.fixedDepositID}
               onChange={handleChange}
               onBlur={handleBlur}>
-            {accounts?.map((account) => (
-              <option value={account.accountNumber}>{account.accountNumber}</option>))}
+            {fixed_deposits?.map((fixed_deposit) => (
+              <option value={fixed_deposit.ID}>{fixed_deposit.ID}</option>))}
           </select>
         </div>
 
@@ -78,41 +80,32 @@ function OnlineLoan() {
         </div>
 
         <div className="input-holder">
-          <label>Account Number<span style={{color: 'green'}}> (To)</span></label><br/>
-          <input 
-          type="text" 
-          name="toAccountID"
-          required 
-          placeholder={'Enter an account number'} 
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={values.toAccountID}
-          />
-          {touched.toAccountID 
-            ? 
-              errors.toAccountID 
-              ? <p className="error">{errors.toAccountID}</p> 
-              : <CheckCircleIcon className='icon'/>
-            :
-            null
-          }
+          <label>Account to Deposit Loan</label><br/>
+          <select 
+              name="linkedAccountID"
+              value={values.linkedAccountID}
+              onChange={handleChange}
+              onBlur={handleBlur}>
+            {accounts?.map((accounts) => (
+              <option value={accounts.accountNumber}>{accounts.accountNumber}</option>))}
+          </select>
         </div>
 
         <div className="input-holder">
-          <label>Remarks</label><br/>
+          <label>Time Period (Years)</label><br/>
           <input 
           type="text" 
-          name="remarks"
-          required 
-          placeholder={'Enter remarks'} 
+          name="period" 
+          required
+          placeholder={'Enter time period in years'}
           onChange={handleChange}
           onBlur={handleBlur}
-          value={values.remarks}
-          />
-          {touched.remarks 
+          value={values.period}
+          />							
+          {touched.period 
             ? 
-              errors.remarks 
-              ? <p className="error">{errors.remarks}</p> 
+              errors.period 
+              ? <p className="error">{errors.period}</p> 
               : <CheckCircleIcon className='icon'/>
             :
             null

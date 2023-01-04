@@ -42,9 +42,8 @@ function Loans() {
 
       <div className="title">
         <h2>Loans</h2>
-
         <div className="loan-actions">
-        <Link to={"/userdashboard/transfer"}>
+        <Link to={"/userdashboard/onlineloan"}>
         <button>
           + Get Online Loan
         </button>

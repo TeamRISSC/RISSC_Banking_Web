@@ -28,7 +28,7 @@ function Transfer() {
       popAction(
         'Are you sure?', 
         `$${values.amount} will be tranfered from account ${values.fromAccountID} to account ${values.toAccountID}`,
-        'Proceed!',
+        'Proceed',
         ()=>apiCrud(`/api/transfer`, 'POST', 'Successful transaction', {
           fromAccountID: values.fromAccountID,
           amount: values.amount,

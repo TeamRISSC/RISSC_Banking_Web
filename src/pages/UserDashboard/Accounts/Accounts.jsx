@@ -1,5 +1,6 @@
 import "./accounts.scss"
 import React from 'react'
+import { Link } from "react-router-dom";
 import { DataGrid } from '@mui/x-data-grid';
 
 import {currency} from '../../../helpers/formatters'
@@ -51,6 +52,13 @@ function Accounts() {
 
       <div className="title">
         <h2>Accounts</h2>
+        <div className="account-actions">
+        <Link to={"/userdashboard/transfer"}>
+        <button>
+          + New Online Transfer
+        </button>
+        </Link>
+        </div>
       </div>
       
       <div style={{ height: 700, width: '90%' }}>
