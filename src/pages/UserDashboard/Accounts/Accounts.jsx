@@ -47,6 +47,39 @@ function Accounts() {
     }
   ))
 
+  const fd_columns = [
+    { 
+      field: 'id', headerName: 'Fixed Deposit Number', minWidth: 130, flex: 1
+    },
+    { 
+      field: 'accId', headerName: 'Linked Account Number', minWidth: 130, flex: 1
+    },
+    { 
+      field: 'amount', headerName: 'Amount', minWidth: 80, flex: 1
+    },
+    { 
+      field: 'period', headerName: 'Time Period', minWidth: 100, flex: 1
+    },
+    { 
+      field: 'interestRate', headerName: 'Interest Rate', minWidth: 80, flex: 1
+    },
+    { 
+      field: 'matuarityDate', headerName: 'Matuarity Date', minWidth: 100, flex: 1
+    },
+  ];
+
+
+  const fd_rows = fixed_deposits?.map(fd => (
+    {
+      id: fixed_deposits.ID,
+      accId: fixed_deposits.linkedAccountID,
+      amount: `Rs. ${fixed_deposits.amount}`,
+      period: `${fixed_deposits.period} months`,
+      interestRate: `${fixed_deposits.interestRate}%`,
+      matuarityDate: fixed_deposits.matuarityDate,
+    }
+  ))
+
   return (
     <div className="accounts">
 
@@ -61,7 +94,7 @@ function Accounts() {
         </div>
       </div>
       
-      <div style={{ height: 700, width: '90%' }}>
+      <div style={{ height: 300, width: '90%' }}>
         <div style={{ display: 'flex', height: '100%' }}>
           <div className="table-container">
             {accounts &&
@@ -71,7 +104,34 @@ function Accounts() {
               rows={rows}
               columns={account_cols}
               pageSize={10}
-              rowsPerPageOptions={[10]}
+              acc_rowsPerPageOptions={[10]}
+              disableSelectionOnClick
+              sx={{
+                '& .MuiDataGrid-cell:hover': {
+                  cursor: 'pointer'
+                },
+              }}
+            />
+            }
+          </div>
+        </div>
+      </div>
+
+      <div className="title">
+        <h2>Fixed Deposits</h2>
+      </div>
+
+      <div style={{ height: 300, width: '90%' }}>
+        <div style={{ display: 'flex', height: '100%' }}>
+          <div className="table-container">
+            {fixed_deposits &&
+            <DataGrid
+              autoHeight
+              className='table'
+              rows={fd_rows}
+              columns={fd_columns}
+              pageSize={10}
+              acc_rowsPerPageOptions={[10]}
               disableSelectionOnClick
               sx={{
                 '& .MuiDataGrid-cell:hover': {
