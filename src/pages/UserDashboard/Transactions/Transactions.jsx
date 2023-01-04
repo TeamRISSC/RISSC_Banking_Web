@@ -1,12 +1,9 @@
 import "./transactions.scss"
 import { DataGrid } from '@mui/x-data-grid';
-
-import useApi from "../../../hooks/useApi";
+import useGetUserTransactions from "../../../hooks/queries/users/useGetUserTransactions";
 
 function Transactions() {
-
-  // fetch and cache all transactions
-  const {data: transactions} = useApi('/api/transactions', 'GET')
+  const {data: transactions} = useGetUserTransactions();
   // console.log(transactions)
 
     // convert date to string
@@ -20,30 +17,23 @@ function Transactions() {
         field: 'date', headerName: 'Date', type: 'date' , minWidth: 100, flex: 1
       },
       { 
-        field: 'accountNumber', headerName: 'Account Number', minWidth: 130, flex: 1
-      },
-      { 
-        field: 'transactionType', headerName: 'Type', minWidth: 70, flex: 1
+        field: 'type', headerName: 'Type', minWidth: 70, flex: 1
       },
       { 
         field: 'amount', headerName: 'Amount', minWidth: 70, flex: 1
       },
       { 
-        field: 'description', headerName: 'Description', minWidth: 130, flex: 2
-      },
-      { 
-        field: 'id', headerName: 'Transaction ID', minWidth: 150, flex: 2.2
+        field: 'remarks', headerName: 'Remarks', minWidth: 150, flex: 2.2
       },
     ];
     
     const rows = transactions?.map(transaction => (
       {
-        date: date(transaction.transactionDate),
-        id: transaction._id,
-        transactionType: transaction.transactionType,
-        accountNumber: transaction.accountNumber,
-        amount: `$${transaction.amount}`,
-        description: transaction.description,
+        date: date(transaction.date),
+        id: transaction.type + transaction.ID,
+        type: transaction.type,
+        amount: `Rs. ${+transaction["amount"] || -transaction["amount*-1"]}`,
+        remarks: transaction.remarks? transaction.remarks : 'N/A',
       }
     ))
 

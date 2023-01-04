@@ -52,7 +52,7 @@ function UserDashboard() {
           <Routes>
             <Route path="/" element={<Overview />} />
             <Route path="/accounts" element={<Accounts />} />
-            <Route path="/transfer" element={<Loans />} />
+            <Route path="/loans" element={<Loans />} />
             <Route path="/transfer" element={<Transfer />} />
             <Route path="/transactions" element={<Transactions />} />
           </Routes>

@@ -9,7 +9,7 @@ const useGetUsers = async () => {
     url: '/api/list',
     method: 'GET',
     headers: {
-      "x-access-token": `${localStorage.jwt}`
+      "Authorization": `Bearer ${localStorage.jwt}`
     },
   });
   return data.users.slice(0).reverse();

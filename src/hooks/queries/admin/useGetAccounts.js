@@ -9,7 +9,7 @@ const useGetAccounts = async () => {
     url: '/api/listAccounts/',
     method: 'GET',
     headers: {
-      "x-access-token": `${localStorage.jwt}`
+      "Authorization": `Bearer ${localStorage.jwt}`
     },
   });
   return data.accounts.slice(0).reverse();

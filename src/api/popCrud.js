@@ -4,19 +4,19 @@ import apiCrud from './apiCrud';
 
 const MySwal = withReactContent(Swal)
 
-export default async function popCrud(title, conText, inputs, url, method, message) {
+export default async function popCrud(title, placeholders, inputs, url, method, message) {
   // inputs should be an array of body request
 
   const { value: formValues } = await MySwal.fire({
     title: title,
     html: 
     <>
-      {inputs.map((input, index) => (
+      {placeholders.map((placeholder, index) => (
         <div key={index} className='swal2-input-holder'>
           <input 
             id={`swal-input${index}`} 
             className="swal2-input" 
-            placeholder={input}
+            placeholder={placeholder}
           />
         </div>
       ))}
@@ -32,7 +32,7 @@ export default async function popCrud(title, conText, inputs, url, method, messa
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: conText
+    confirmButtonText: title
   })
   
   if (formValues) {

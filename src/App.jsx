@@ -8,13 +8,13 @@ import UserDashboard from "./pages/UserDashboard/UserDashboard";
 import { AuthContext } from "./context/Auth-context";
 
 function App() {
-  const { isAdmin, jwt } = useContext(AuthContext);
-  // console.log(isAdmin)
+  const { role, jwt } = useContext(AuthContext);
+  // console.log(jwt)
 
   return (
     <div className="App">
       {jwt ? (
-        isAdmin === "admin" ? (
+        role === "admin" ? (
           <Routes>
             <Route path="/adminpanel/*" element={<AdminPanel />} />
             <Route path="*" element={<Navigate to="/adminpanel" replace />} />

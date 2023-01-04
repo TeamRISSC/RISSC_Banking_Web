@@ -1,13 +1,11 @@
 import "./loans.scss"
 import { DataGrid } from '@mui/x-data-grid';
 
-import useApi from "../../../hooks/useApi";
+import useGetUserLoans from "../../../hooks/queries/users/useGetUserLoans";
 
-function Transactions() {
-
-  // fetch and cache all transactions
-  const {data: transactions} = useApi('/api/loans', 'GET')
-  // console.log(transactions)
+function Loans() {
+  const {data: loans} = useGetUserLoans();
+  console.log(loans);
 
     // convert date to string
     function date(date) {
@@ -20,44 +18,44 @@ function Transactions() {
         field: 'date', headerName: 'Date', type: 'date' , minWidth: 100, flex: 1
       },
       { 
-        field: 'accountNumber', headerName: 'Account Number', minWidth: 130, flex: 1
-      },
-      { 
-        field: 'transactionType', headerName: 'Type', minWidth: 70, flex: 1
+        field: 'id', headerName: 'Loan Number', minWidth: 130, flex: 1
       },
       { 
         field: 'amount', headerName: 'Amount', minWidth: 70, flex: 1
       },
       { 
-        field: 'description', headerName: 'Description', minWidth: 130, flex: 2
+        field: 'class', headerName: 'Loan Type', minWidth: 130, flex: 1
       },
       { 
-        field: 'id', headerName: 'Transaction ID', minWidth: 150, flex: 2.2
+        field: 'type', headerName: 'Loan Purpose', minWidth: 150, flex: 1
+      },
+      { 
+        field: 'period', headerName: 'Time Period', minWidth: 70, flex: 1
       },
     ];
     
-    const rows = transactions?.map(transaction => (
+    const rows = loans?.map(loan => (
       {
-        date: date(transaction.transactionDate),
-        id: transaction._id,
-        transactionType: transaction.transactionType,
-        accountNumber: transaction.accountNumber,
-        amount: `$${transaction.amount}`,
-        description: transaction.description,
+        date: date(loan.applyDate),
+        id: loan.ID,
+        amount: `Rs. ${loan.amount}`,
+        period: `${loan.timePeriod} years`,
+        class: loan.loanClass,
+        type: loan.loanType,
       }
     ))
 
   return (
-    <div className="transactions">
+    <div className="loans">
 
       <div className="title">
-        <h2>Transactions</h2>
+        <h2>Loans</h2>
       </div>
 
       <div style={{ height: 700, width: '90%' }}>
         <div style={{ display: 'flex', height: '100%' }}>
           <div className="table-container">
-            {transactions &&
+            {loans &&
             <DataGrid
               autoHeight
               className='table'
@@ -81,4 +79,4 @@ function Transactions() {
   )
 }
 
-export default Transactions
+export default Loans

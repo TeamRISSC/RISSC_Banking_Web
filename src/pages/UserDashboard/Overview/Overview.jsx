@@ -2,14 +2,41 @@ import "./overview.scss"
 import React from 'react'
 import mastercard from '../../../images/mastercard_icon.png'
 import Charts from '../../../components/chart/Chart'
-import useGetUsersAccounts from "../../../hooks/queries/users/useGetUserAccounts";
+import useGetUserSavingsAccounts from "../../../hooks/queries/users/useGetUserSavingsAccounts";
+import useGetUserCurrentAccounts from "../../../hooks/queries/users/useGetUserCurrentAccounts";
+import useGetUserLoans from "../../../hooks/queries/users/useGetUserLoans";
+import useGetUserTransactions from "../../../hooks/queries/users/useGetUserTransactions";
 
 function Overview() {
 
-  const {data: accounts} = useGetUsersAccounts()
+  const {data: s_accounts} = useGetUserSavingsAccounts();
+  const {data: c_accounts} = useGetUserCurrentAccounts();
+  const {data: loans} = useGetUserLoans();
+  const {data: transactions} = useGetUserTransactions();
   
-  const totalAccountsBalance = accounts?.length > 1 && accounts.map(account => account.balance).reduce((x, y) => x + y)
+  const accounts = c_accounts && s_accounts.concat(c_accounts);
+  const totalBalance = accounts && accounts.map(account => account.balance).reduce((x, y) => +x + +y, 0);
+  const totalLiabs = loans && loans.map(loan => loan.amount).reduce((x, y) => +x + +y, 0);
   
+  const getMonthlySums = (items) => {
+    const monthlyDeposits = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    const monthlyWithdrawals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+
+    if (!items) return {monthlyDeposits, monthlyWithdrawals};
+
+    for (const item of items) {
+      const date = new Date(item.date);
+      const month = date.getMonth();
+      if (item.type === 'deposit') {
+        monthlyDeposits[month] += +item["amount"];
+      } 
+      else if (item.type === 'withdrawal') {
+        monthlyWithdrawals[month] += -item["amount*-1"];
+      }   
+    }
+    return {monthlyDeposits, monthlyWithdrawals};
+  }
+
   return (
     <div className='overview'>
 
@@ -26,12 +53,12 @@ function Overview() {
 
             <div className="balance">
               <p>Total Assets</p>
-              <h3>Rs. {totalAccountsBalance}</h3>
+              <h3>Rs. {totalBalance && totalBalance.toFixed(2)}</h3>
             </div>
 
             <div className="balance">
               <p>Total Liablities</p>
-              <h3>Rs. {totalAccountsBalance}</h3>
+              <h3>Rs. {totalLiabs && totalLiabs.toFixed(2)}</h3>
             </div>
 
           </div>
@@ -42,7 +69,7 @@ function Overview() {
           <div className="right-section">
             <h4>Transactions Summary</h4>
             <div className="chart-holder">
-              <Charts/>
+              <Charts chartData = {transactions? getMonthlySums(transactions) : {}}/>
 
             </div>
           </div>

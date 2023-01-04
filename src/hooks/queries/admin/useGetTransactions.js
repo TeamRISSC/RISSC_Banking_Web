@@ -9,7 +9,7 @@ const useGetTransactions = async () => {
     url: '/api/listTransactions/',
     method: 'GET',
     headers: {
-      "x-access-token": `${localStorage.jwt}`
+      "Authorization": `Bearer ${localStorage.jwt}`
     },
   });
   return data.transactions.slice(0).reverse();

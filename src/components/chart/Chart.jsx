@@ -1,13 +1,12 @@
-import React from 'react'
+import React from "react";
 import Chart from "react-apexcharts"
 
-function Charts() {
+function Charts(props) {
 
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
   // chart
-  const chartContent = {
-    options: {
+  const options = {
       chart: {
         id: "basic-bar",
       },
@@ -29,6 +28,14 @@ function Charts() {
           }
         },
       },
+      plotOptions: {
+        bar: {
+          dataLabels: {
+            orientation: 'vertical',
+            position: 'center' // bottom/center/top
+          }
+        }
+      },
       legend: {
         labels: {
           // colors: '#ffffff',
@@ -37,26 +44,25 @@ function Charts() {
       grid: {
         show: false,
       },
-    },
-    series: [
+    }
+    const series = [
       {
         name: "Deposits",
-        data: [440, 550, 570, 560, 610, 580],
-        color: '#254138'
+        data: props.chartData.monthlyDeposits,
+        color: '#254138',
       },
       {
         name: "Withdrawals",
-        data: [350, 410, 360, 260, 450, 480],
-        color: '#ff9d22'
+        data: props.chartData.monthlyWithdrawals,
+        color: '#ff9d22',
       },
-    ]
-  }
+    ];
 
   return (
     <Chart
       // className='sales-chart'
-      options={chartContent.options}
-      series={chartContent.series}
+      options={options}
+      series={series}
       type="bar"
       height= '350'
       // width='500'

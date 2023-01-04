@@ -7,7 +7,7 @@ const callApi = async (url, method, noAuth, body) => {
     url: url,
     method: method,
     headers: {
-      "x-access-token": !noAuth && `${localStorage.jwt}`
+      Authorization: !noAuth && `Bearer ${localStorage.jwt}`
     },
     data: body
   });

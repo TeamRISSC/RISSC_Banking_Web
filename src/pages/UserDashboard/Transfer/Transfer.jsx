@@ -12,20 +12,24 @@ function Transfer() {
   // handle user inputs
 	const { values, errors, touched, handleBlur, handleChange, handleSubmit} = useFormik({
 		initialValues: {
-			accountNumber: '',
+			fromAccountID: '',
 			amount: '',
-			destinationAccountNumber: '',
+			toAccountID: '',
+      date: '',
+      remarks: '',
 		},
 		validationSchema: transferSchema,
 		onSubmit: (values)=> { 
       popAction(
         'Are you sure?', 
-        `$${values.amount} will be tranfered from account ${values.accountNumber} to account ${values.destinationAccountNumber}`,
+        `$${values.amount} will be tranfered from account ${values.fromAccountID} to account ${values.toAccountID}`,
         'Proceed!',
         ()=>apiCrud(`/api/transfer`, 'POST', 'Successful transaction', {
-          accountNumber: values.accountNumber,
+          fromAccountID: values.fromAccountID,
           amount: values.amount,
-          destinationAccountNumber: values.destinationAccountNumber,
+          toAccountID: values.toAccountID,
+          date: new Date().toISOString().slice(0, 10),
+          remarks: values.remarks,
         })()
       )
 		}
@@ -39,17 +43,17 @@ function Transfer() {
           <label>Account Number<span style={{color: 'red'}}> (From)</span></label><br/>
           <input 
           type="text" 
-          name="accountNumber"
+          name="fromAccountID"
           required 
           placeholder={'Enter an account number'} 
           onChange={handleChange}
           onBlur={handleBlur}
-          value={values.accountNumber}
+          value={values.fromAccountID}
           />
-          {touched.accountNumber 
+          {touched.fromAccountID 
             ? 
-              errors.accountNumber 
-              ? <p className="error">{errors.accountNumber}</p> 
+              errors.fromAccountID 
+              ? <p className="error">{errors.fromAccountID}</p> 
               : <CheckCircleIcon className='icon'/>
             :
             null
@@ -81,17 +85,38 @@ function Transfer() {
           <label>Account Number<span style={{color: 'green'}}> (Recipient)</span></label><br/>
           <input 
           type="text" 
-          name="destinationAccountNumber"
+          name="toAccountID"
           required 
           placeholder={'Enter an account number'} 
           onChange={handleChange}
           onBlur={handleBlur}
-          value={values.destinationAccountNumber}
+          value={values.toAccountID}
           />
-          {touched.destinationAccountNumber 
+          {touched.toAccountID 
             ? 
-              errors.destinationAccountNumber 
-              ? <p className="error">{errors.destinationAccountNumber}</p> 
+              errors.toAccountID 
+              ? <p className="error">{errors.toAccountID}</p> 
+              : <CheckCircleIcon className='icon'/>
+            :
+            null
+          }
+        </div>
+
+        <div className="input-holder">
+          <label>Remarks</label><br/>
+          <input 
+          type="text" 
+          name="remarks"
+          required 
+          placeholder={'Enter remarks'} 
+          onChange={handleChange}
+          onBlur={handleBlur}
+          value={values.remarks}
+          />
+          {touched.remarks 
+            ? 
+              errors.remarks 
+              ? <p className="error">{errors.remarks}</p> 
               : <CheckCircleIcon className='icon'/>
             :
             null

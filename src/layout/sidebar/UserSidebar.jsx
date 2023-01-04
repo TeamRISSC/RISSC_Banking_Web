@@ -64,12 +64,12 @@ function Sidebar(props) {
             </li>
           </Link>
 
-          <Link to={"/userdashboard/settings"}>
+          {/* <Link to={"/userdashboard/settings"}>
             <li>
               <SettingsIcon className="icon" />
               {!isSidebarActive && <p>Settings</p>}
             </li>
-          </Link>
+          </Link> */}
 
           <li onClick={signOut}>
             <ExitToAppOutlinedIcon className="icon" />

@@ -7,7 +7,7 @@ async function apiCrud(url, method, message, data, action) {
     url: url,
     method: method,
     headers: {
-      "x-access-token": `${localStorage.jwt}`
+      "Authorization": `Bearer ${localStorage.jwt}`
     },
     data: data && data
   })

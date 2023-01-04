@@ -2,45 +2,21 @@ import "./accounts.scss"
 import React from 'react'
 import { DataGrid } from '@mui/x-data-grid';
 
-import apiCrud from "../../../api/apiCrud";
 import popCrud from "../../../api/popCrud";
-import useGetUsersAccounts from "../../../hooks/queries/users/useGetUserAccounts";
-import popAction from '../../../helpers/popAction'
+import useGetUserSavingsAccounts from "../../../hooks/queries/users/useGetUserSavingsAccounts";
 
 function Accounts() {
-
   // fetch and cache all accounts
-  const {data: accounts} = useGetUsersAccounts()
+  const {data: accounts} = useGetUserSavingsAccounts()
   // console.log(accounts);
-
-  // convert date to string
-  function date(date) {
-    const display = new Date(date)
-    return display.toLocaleDateString('en-GB');
-  }
-
-  // set available actions
-
-  // create a new account
-  function createNewAccount() {
-    popAction(
-      'Are you sure?', 
-      "A new account will be created!",
-      'Proceed!',
-      ()=>apiCrud(`/api/createAccount`, 'POST', 'Account created', {
-        accountType: 'saving',
-        accountBalance: '0'
-      })()
-    )
-  } 
 
   // deposit
   function deposit() {
     popCrud(
       'Deposit', 
-      'Deposit', 
-      ['accountNumber', 'amount'], 
-      `/api/recharge`,
+      ['Account Number', 'Amount'], 
+      ['toAccountID', 'amount'], 
+      `/api/deposit`,
       'POST',
       'Successful transaction'
     )
@@ -50,8 +26,8 @@ function Accounts() {
   function withdraw() {
     popCrud(
       'Withdraw', 
-      'Withdraw', 
-      ['accountNumber', 'amount'], 
+      ['Account Number', 'Amount'], 
+      ['fromAccountID', 'amount'], 
       `/api/withdraw`,
       'POST',
       'Successful transaction'
@@ -60,7 +36,10 @@ function Accounts() {
 
   const columns = [
     { 
-      field: 'ID', headerName: 'Account Number', minWidth: 130, flex: 2
+      field: 'id', headerName: 'Account Number', minWidth: 130, flex: 1
+    },
+    { 
+      field: 'name', headerName: 'Account Name', minWidth: 130, flex: 1
     },
     { 
       field: 'balance', headerName: 'Balance', minWidth: 80, flex: 1
@@ -69,14 +48,15 @@ function Accounts() {
       field: 'accountType', headerName: 'Type', minWidth: 70, flex: 1
     },
     { 
-      field: 'branchID', headerName: 'Branch', minWidth: 130, flex: 3
+      field: 'branchID', headerName: 'Branch', minWidth: 130, flex: 1
     },
   ];
   
   const rows = accounts?.map(account => (
     {
-      id: account.ID,
-      balance: `$${account.balance}`,
+      id: account.accountNumber,
+      name: account.name,
+      balance: `Rs. ${account.balance}`,
       accountType: account.accountType,
       branchID: `#${account.branchID}`,
     }
@@ -89,11 +69,6 @@ function Accounts() {
         <h2>Accounts</h2>
 
         <div className="account-actions">
-
-          <button onClick={createNewAccount}>
-            + Create new account
-          </button>
-
           <div className="account-actions-bottom">
             <button onClick={deposit}>
               Deposit
