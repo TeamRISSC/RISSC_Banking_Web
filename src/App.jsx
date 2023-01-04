@@ -31,7 +31,6 @@ function App() {
       ) : (
         <Routes>
           <Route path="/" element={<Homepage />} />
-          {/* <Route path="/" element={<UserDashboard />} /> */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       )}

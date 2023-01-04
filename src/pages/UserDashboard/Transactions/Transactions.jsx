@@ -1,16 +1,12 @@
 import "./transactions.scss"
 import { DataGrid } from '@mui/x-data-grid';
+
+import { currency, date } from "../../../helpers/formatters";
 import useGetUserTransactions from "../../../hooks/queries/users/useGetUserTransactions";
 
 function Transactions() {
   const {data: transactions} = useGetUserTransactions();
   // console.log(transactions)
-
-    // convert date to string
-    function date(date) {
-      const display = new Date(date)
-      return display.toLocaleDateString('en-GB');
-    }
 
     const columns = [
       { 
@@ -32,7 +28,7 @@ function Transactions() {
         date: date(transaction.date),
         id: transaction.type + transaction.ID,
         type: transaction.type,
-        amount: `Rs. ${+transaction["amount"] || -transaction["amount*-1"]}`,
+        amount: currency(transaction.amount.replace("-", "")),
         remarks: transaction.remarks? transaction.remarks : 'N/A',
       }
     ))

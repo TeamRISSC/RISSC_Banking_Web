@@ -1,14 +1,17 @@
 import * as yup from 'yup'
 
-export const transferSchema = yup.object({
-  fromAccountID: yup.string()
+export const onlineLoanSchema = yup.object({
+  fixedDepositID: yup.string()
     .min(10, 'Minimum  characters allowed are 11')
     .max(10, 'Maximum characters allowed are 11')
     .required('Account number is required'),
   amount: yup.number()
     .positive('Enter a vaild amount')
     .required('Amount is required'),
-  toAccountID: yup.string()
+  period: yup.number()
+    .positive('Enter a vaild amount')
+    .required('Amount is required'),
+  linkedAccountID: yup.string()
     .min(10, 'Minimum  characters allowed are 11')
     .max(10, 'Maximum characters allowed are 11')
     .required('Account number is required'),

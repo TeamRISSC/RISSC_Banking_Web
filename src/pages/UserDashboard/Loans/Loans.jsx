@@ -1,33 +1,26 @@
 import "./loans.scss"
+import { Link } from "react-router-dom";
 import { DataGrid } from '@mui/x-data-grid';
 
+import {currency, date} from '../../../helpers/formatters'
 import useGetUserLoans from "../../../hooks/queries/users/useGetUserLoans";
+import useGetUserOnlineLoans from "../../../hooks/queries/users/useGetUserOnlineLoans";
 
 function Loans() {
-  const {data: loans} = useGetUserLoans();
-  console.log(loans);
-
-    // convert date to string
-    function date(date) {
-      const display = new Date(date)
-      return display.toLocaleDateString('en-GB');
-    }
+  const {data: p_loans} = useGetUserLoans();
+  const {data: o_loans} = useGetUserOnlineLoans();
+  const loans = (p_loans && o_loans) && p_loans.concat(o_loans);
+  // console.log(loans);
 
     const columns = [
       { 
         field: 'date', headerName: 'Date', type: 'date' , minWidth: 100, flex: 1
       },
       { 
-        field: 'id', headerName: 'Loan Number', minWidth: 130, flex: 1
-      },
-      { 
         field: 'amount', headerName: 'Amount', minWidth: 70, flex: 1
       },
       { 
-        field: 'class', headerName: 'Loan Type', minWidth: 130, flex: 1
-      },
-      { 
-        field: 'type', headerName: 'Loan Purpose', minWidth: 150, flex: 1
+        field: 'type', headerName: 'Loan Type', minWidth: 150, flex: 1
       },
       { 
         field: 'period', headerName: 'Time Period', minWidth: 70, flex: 1
@@ -36,11 +29,10 @@ function Loans() {
     
     const rows = loans?.map(loan => (
       {
+        id: loan.loanType + loan.ID,
         date: date(loan.applyDate),
-        id: loan.ID,
-        amount: `Rs. ${loan.amount}`,
+        amount: currency(loan.amount),
         period: `${loan.timePeriod} years`,
-        class: loan.loanClass,
         type: loan.loanType,
       }
     ))
@@ -50,6 +42,14 @@ function Loans() {
 
       <div className="title">
         <h2>Loans</h2>
+
+        <div className="loan-actions">
+        <Link to={"/userdashboard/transfer"}>
+        <button>
+          + Get Online Loan
+        </button>
+        </Link>
+        </div>
       </div>
 
       <div style={{ height: 700, width: '90%' }}>

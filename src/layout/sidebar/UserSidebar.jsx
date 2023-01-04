@@ -6,9 +6,9 @@ import LanguageIcon from "@mui/icons-material/Language";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import PaymentIcon from "@mui/icons-material/Payment";
-import TransformOutlinedIcon from "@mui/icons-material/TransformOutlined";
 import ViewListOutlinedIcon from "@mui/icons-material/ViewListOutlined";
-import SettingsIcon from "@mui/icons-material/Settings";
+// import TransformOutlinedIcon from "@mui/icons-material/TransformOutlined";
+// import SettingsIcon from "@mui/icons-material/Settings";
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import { AuthContext } from "../../context/Auth-context";
 
@@ -50,12 +50,12 @@ function Sidebar(props) {
             </li>
           </Link>
 
-          <Link to={"/userdashboard/transfer"}>
+          {/* <Link to={"/userdashboard/transfer"}>
             <li>
               <TransformOutlinedIcon className="icon" />
               {!isSidebarActive && <p>Transfer</p>}
             </li>
-          </Link>
+          </Link> */}
 
           <Link to={"/userdashboard/transactions"}>
             <li>

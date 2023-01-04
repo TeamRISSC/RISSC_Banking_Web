@@ -5,37 +5,49 @@ import Charts from '../../../components/chart/Chart'
 import useGetUserSavingsAccounts from "../../../hooks/queries/users/useGetUserSavingsAccounts";
 import useGetUserCurrentAccounts from "../../../hooks/queries/users/useGetUserCurrentAccounts";
 import useGetUserLoans from "../../../hooks/queries/users/useGetUserLoans";
+import useGetUserOnlineLoans from "../../../hooks/queries/users/useGetUserOnlineLoans";
 import useGetUserTransactions from "../../../hooks/queries/users/useGetUserTransactions";
 
 function Overview() {
 
   const {data: s_accounts} = useGetUserSavingsAccounts();
   const {data: c_accounts} = useGetUserCurrentAccounts();
-  const {data: loans} = useGetUserLoans();
+  const accounts = (c_accounts && s_accounts) && s_accounts.concat(c_accounts);
+  
+  const {data: p_loans} = useGetUserLoans();
+  const {data: o_loans} = useGetUserOnlineLoans();
+  const loans = (p_loans && o_loans) && p_loans.concat(o_loans);
+
   const {data: transactions} = useGetUserTransactions();
   
-  const accounts = c_accounts && s_accounts.concat(c_accounts);
   const totalBalance = accounts && accounts.map(account => account.balance).reduce((x, y) => +x + +y, 0);
   const totalLiabs = loans && loans.map(loan => loan.amount).reduce((x, y) => +x + +y, 0);
   
   const getMonthlySums = (items) => {
-    const monthlyDeposits = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    const monthlyWithdrawals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    const monthlyInflow = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    const monthlyOutflow = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-    if (!items) return {monthlyDeposits, monthlyWithdrawals};
+    if (!items) return {monthlyInflow, monthlyOutflow};
 
     for (const item of items) {
       const date = new Date(item.date);
       const month = date.getMonth();
-      if (item.type === 'deposit') {
-        monthlyDeposits[month] += +item["amount"];
+      if (parseFloat(item.amount) > 0) {
+        monthlyInflow[month] += +item.amount;
       } 
-      else if (item.type === 'withdrawal') {
-        monthlyWithdrawals[month] += -item["amount*-1"];
+      else if (parseFloat(item.amount) < 0) {
+        monthlyOutflow[month] += -item.amount;
       }   
     }
-    return {monthlyDeposits, monthlyWithdrawals};
+    return {monthlyInflow, monthlyOutflow};
   }
+
+  const currency = (value) => {
+    const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'LKR'});
+    return formatter.format(value).replace("LKR", "Rs.")
+  };
 
   return (
     <div className='overview'>
@@ -53,12 +65,12 @@ function Overview() {
 
             <div className="balance">
               <p>Total Assets</p>
-              <h3>Rs. {totalBalance && totalBalance.toFixed(2)}</h3>
+              <h3>{totalBalance && currency(totalBalance)}</h3>
             </div>
 
             <div className="balance">
               <p>Total Liablities</p>
-              <h3>Rs. {totalLiabs && totalLiabs.toFixed(2)}</h3>
+              <h3>{totalLiabs && currency(totalLiabs)}</h3>
             </div>
 
           </div>

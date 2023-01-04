@@ -2,7 +2,7 @@
 @import '../../../scss/utilities/variables';
 @import '../../../scss/utilities/mixins';
 
-.transfer {
+.onlineloan {
   z-index: 10;
   color: $clr-dark;
   display: flex;
@@ -19,7 +19,7 @@
     align-items: center;
   }
   
-  .transfer-form {
+  .onlineloan-form {
     background: $clr-light;
     
     form {

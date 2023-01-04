@@ -2,43 +2,18 @@ import "./accounts.scss"
 import React from 'react'
 import { DataGrid } from '@mui/x-data-grid';
 
-import popCrud from "../../../api/popCrud";
+import {currency} from '../../../helpers/formatters'
 import useGetUserSavingsAccounts from "../../../hooks/queries/users/useGetUserSavingsAccounts";
-import useGetUserFixedDeposits from "../../../hooks/queries/users/useGetUserFixedDeposits";
+import useGetUserCurrentAccounts from "../../../hooks/queries/users/useGetUserCurrentAccounts";
 
 function Accounts() {
   // fetch and cache all accounts
-  const {data: accounts} = useGetUserSavingsAccounts()
+  const {data: s_accounts} = useGetUserSavingsAccounts();
+  const {data: c_accounts} = useGetUserCurrentAccounts();
+  const accounts = c_accounts && s_accounts.concat(c_accounts);
   // console.log(accounts);
 
-  // fetch and cache all fixed deposits
-  const {data: fixed_deposits} = useGetUserFixedDeposits()
-
-  // deposit
-  function deposit() {
-    popCrud(
-      'Deposit', 
-      ['Account Number', 'Amount'], 
-      ['toAccountID', 'amount'], 
-      `/api/deposit`,
-      'POST',
-      'Successful transaction'
-    )
-  }
-
-  // withdraw
-  function withdraw() {
-    popCrud(
-      'Withdraw', 
-      ['Account Number', 'Amount'], 
-      ['fromAccountID', 'amount'], 
-      `/api/withdraw`,
-      'POST',
-      'Successful transaction'
-    )
-  }
-
-  const acc_columns = [
+  const account_cols = [
     { 
       field: 'id', headerName: 'Account Number', minWidth: 130, flex: 1
     },
@@ -52,17 +27,22 @@ function Accounts() {
       field: 'accountType', headerName: 'Type', minWidth: 70, flex: 1
     },
     { 
-      field: 'branchID', headerName: 'Branch', minWidth: 130, flex: 1
+      field: 'branch', headerName: 'Branch', minWidth: 130, flex: 1
     },
   ];
 
-  const acc_rows = accounts?.map(account => (
+  const fd_cols = [...account_cols]
+  fd_cols.push(    { 
+    field: 'period', headerName: 'period', minWidth: 70, flex: 1
+  })
+  
+  const rows = accounts?.map(account => (
     {
       id: account.accountNumber,
       name: account.name,
-      balance: `Rs. ${account.balance}`,
+      balance: currency(account.balance),
       accountType: account.accountType,
-      branchID: `#${account.branchID}`,
+      branch: account.branch,
     }
   ))
 
@@ -104,18 +84,6 @@ function Accounts() {
 
       <div className="title">
         <h2>Accounts</h2>
-
-        <div className="account-actions">
-          <div className="account-actions-bottom">
-            <button onClick={deposit}>
-              Deposit
-            </button>
-            <button onClick={withdraw}>
-              Withdraw
-            </button>
-          </div>
-
-        </div>
       </div>
       
       <div style={{ height: 300, width: '90%' }}>
@@ -125,8 +93,8 @@ function Accounts() {
             <DataGrid
               autoHeight
               className='table'
-              rows={acc_rows}
-              columns={acc_columns}
+              rows={rows}
+              columns={account_cols}
               pageSize={10}
               acc_rowsPerPageOptions={[10]}
               disableSelectionOnClick

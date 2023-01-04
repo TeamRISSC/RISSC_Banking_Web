@@ -8,8 +8,9 @@ import Navbar from "../../layout/navbar/Navbar";
 import Overview from "./Overview/Overview";
 import Accounts from "./Accounts/Accounts";
 import Transactions from "./Transactions/Transactions";
-import Transfer from "./Transfer/Transfer";
 import Loans from "./Loans/Loans";
+import Transfer from "./Transfer/Transfer";
+import OnlineLoan from "./OnlineLoan/OnlineLoan";
 
 function UserDashboard() {
   // control the responsive sidebar
@@ -53,8 +54,9 @@ function UserDashboard() {
             <Route path="/" element={<Overview />} />
             <Route path="/accounts" element={<Accounts />} />
             <Route path="/loans" element={<Loans />} />
-            <Route path="/transfer" element={<Transfer />} />
             <Route path="/transactions" element={<Transactions />} />
+            <Route path="/transfer" element={<Transfer />} />
+            <Route path="/transfer" element={<OnlineLoan />} />
           </Routes>
         </main>
       </div>
