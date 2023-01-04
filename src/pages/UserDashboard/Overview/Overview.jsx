@@ -28,10 +28,10 @@ function Overview() {
       const date = new Date(item.date);
       const month = date.getMonth();
       if (item.type === 'deposit') {
-        monthlyDeposits[month] += +item["amount"];
+        monthlyDeposits[month] += +item.amount;
       } 
       else if (item.type === 'withdrawal') {
-        monthlyWithdrawals[month] += -item["amount*-1"];
+        monthlyWithdrawals[month] += +item.amount;
       }   
     }
     return {monthlyDeposits, monthlyWithdrawals};

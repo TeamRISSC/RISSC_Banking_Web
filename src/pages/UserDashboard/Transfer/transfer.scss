@@ -55,7 +55,17 @@
       border: none;
       color: black;
     }
-  
+
+    select {
+      width: 300px;
+      height: 45px;
+      padding-left: 1rem;
+      border-radius: 20px;
+      outline: none;
+      border: none;
+      color: black;
+    }
+
     #checkbox {
       width: 1rem
     }

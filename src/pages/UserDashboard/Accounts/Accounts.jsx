@@ -20,32 +20,7 @@ function Accounts() {
     return formatter.format(value).replace("LKR", "Rs.")
   };
 
-
-  // deposit
-  function deposit() {
-    popCrud(
-      'Deposit', 
-      ['Account Number', 'Amount'], 
-      ['toAccountID', 'amount'], 
-      `/api/deposit`,
-      'POST',
-      'Successful transaction'
-    )
-  }
-
-  // withdraw
-  function withdraw() {
-    popCrud(
-      'Withdraw', 
-      ['Account Number', 'Amount'], 
-      ['fromAccountID', 'amount'], 
-      `/api/withdraw`,
-      'POST',
-      'Successful transaction'
-    )
-  }
-
-  const columns = [
+  const account_cols = [
     { 
       field: 'id', headerName: 'Account Number', minWidth: 130, flex: 1
     },
@@ -59,9 +34,14 @@ function Accounts() {
       field: 'accountType', headerName: 'Type', minWidth: 70, flex: 1
     },
     { 
-      field: 'branchID', headerName: 'Branch', minWidth: 130, flex: 1
+      field: 'branch', headerName: 'Branch', minWidth: 130, flex: 1
     },
   ];
+
+  const fd_cols = [...account_cols]
+  fd_cols.push(    { 
+    field: 'period', headerName: 'period', minWidth: 70, flex: 1
+  })
   
   const rows = accounts?.map(account => (
     {
@@ -69,7 +49,7 @@ function Accounts() {
       name: account.name,
       balance: currency(account.balance),
       accountType: account.accountType,
-      branchID: `#${account.branchID}`,
+      branch: account.branch,
     }
   ))
 
@@ -78,18 +58,6 @@ function Accounts() {
 
       <div className="title">
         <h2>Accounts</h2>
-
-        <div className="account-actions">
-          <div className="account-actions-bottom">
-            <button onClick={deposit}>
-              Deposit
-            </button>
-            <button onClick={withdraw}>
-              Withdraw
-            </button>
-          </div>
-
-        </div>
       </div>
       
       <div style={{ height: 700, width: '90%' }}>
@@ -100,7 +68,7 @@ function Accounts() {
               autoHeight
               className='table'
               rows={rows}
-              columns={columns}
+              columns={account_cols}
               pageSize={10}
               rowsPerPageOptions={[10]}
               disableSelectionOnClick

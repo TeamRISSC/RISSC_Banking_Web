@@ -39,7 +39,7 @@ function Transactions() {
         date: date(transaction.date),
         id: transaction.type + transaction.ID,
         type: transaction.type,
-        amount: transaction.amount ? currency(transaction.amount) : currency(-transaction["amount*-1"]),
+        amount: currency(transaction.amount),
         remarks: transaction.remarks? transaction.remarks : 'N/A',
       }
     ))

@@ -6,8 +6,13 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { transferSchema } from "../../../schemas/transferSchema";
 import popAction from "../../../helpers/popAction";
 import apiCrud from "../../../api/apiCrud";
+import useGetUserCurrentAccounts from "../../../hooks/queries/users/useGetUserSavingsAccounts";
+import useGetUserSavingsAccounts from "../../../hooks/queries/users/useGetUserCurrentAccounts";
 
 function Transfer() {
+  const {data: s_accounts} = useGetUserSavingsAccounts();
+  const {data: c_accounts} = useGetUserCurrentAccounts();
+  const accounts = c_accounts && s_accounts.concat(c_accounts).sort((a, b) => +a.accountNumber - +b.accountNumber);;
 
   // handle user inputs
 	const { values, errors, touched, handleBlur, handleChange, handleSubmit} = useFormik({
@@ -41,23 +46,14 @@ function Transfer() {
 
         <div className="input-holder">
           <label>Account Number<span style={{color: 'red'}}> (From)</span></label><br/>
-          <input 
-          type="text" 
-          name="fromAccountID"
-          required 
-          placeholder={'Enter an account number'} 
-          onChange={handleChange}
-          onBlur={handleBlur}
-          value={values.fromAccountID}
-          />
-          {touched.fromAccountID 
-            ? 
-              errors.fromAccountID 
-              ? <p className="error">{errors.fromAccountID}</p> 
-              : <CheckCircleIcon className='icon'/>
-            :
-            null
-          }
+          <select 
+              name="fromAccountID"
+              value={values.fromAccountID}
+              onChange={handleChange}
+              onBlur={handleBlur}>
+            {accounts?.map((account) => (
+              <option value={account.accountNumber}>{account.accountNumber}</option>))}
+          </select>
         </div>
 
         <div className="input-holder">
@@ -82,7 +78,7 @@ function Transfer() {
         </div>
 
         <div className="input-holder">
-          <label>Account Number<span style={{color: 'green'}}> (Recipient)</span></label><br/>
+          <label>Account Number<span style={{color: 'green'}}> (To)</span></label><br/>
           <input 
           type="text" 
           name="toAccountID"
