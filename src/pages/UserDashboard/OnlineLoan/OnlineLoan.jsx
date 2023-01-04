@@ -1,15 +1,15 @@
-import "./transfer.scss"
+import "./onlineloan.scss"
 import React from 'react'
 import {useFormik} from 'formik'
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { transferSchema } from "../../../schemas/transferSchema";
+import { onlineLoanSchema } from "../../../schemas/onlineLoanSchema";
 import popAction from "../../../helpers/popAction";
 import apiCrud from "../../../api/apiCrud";
 import useGetUserCurrentAccounts from "../../../hooks/queries/users/useGetUserSavingsAccounts";
 import useGetUserSavingsAccounts from "../../../hooks/queries/users/useGetUserCurrentAccounts";
 
-function Transfer() {
+function OnlineLoan() {
   const {data: s_accounts} = useGetUserSavingsAccounts();
   const {data: c_accounts} = useGetUserCurrentAccounts();
   const accounts = c_accounts && s_accounts.concat(c_accounts).sort((a, b) => +a.accountNumber - +b.accountNumber);;
@@ -17,19 +17,19 @@ function Transfer() {
   // handle user inputs
 	const { values, errors, touched, handleBlur, handleChange, handleSubmit} = useFormik({
 		initialValues: {
-			fromAccountID: '',
+			fixedDepositID: '',
+			linkedAccountID: '',
 			amount: '',
-			toAccountID: '',
+      period: '',
       date: '',
-      remarks: '',
 		},
-		validationSchema: transferSchema,
+		validationSchema: onlineLoanSchema,
 		onSubmit: (values)=> { 
       popAction(
         'Are you sure?', 
         `$${values.amount} will be tranfered from account ${values.fromAccountID} to account ${values.toAccountID}`,
         'Proceed!',
-        ()=>apiCrud(`/api/transfer`, 'POST', 'Successful transaction', {
+        ()=>apiCrud(`/api/createOnlineLoan`, 'POST', 'Successful transaction', {
           fromAccountID: values.fromAccountID,
           amount: values.amount,
           toAccountID: values.toAccountID,
@@ -40,8 +40,8 @@ function Transfer() {
 		}
 })
 
-  const transferForm =(
-		<main className='transfer-form'>
+  const onlineLoanForm =(
+		<main className='onlineloan-form'>
       <form action="/home" onSubmit={handleSubmit}>
 
         <div className="input-holder">
@@ -62,7 +62,7 @@ function Transfer() {
           type="text" 
           name="amount" 
           required
-          placeholder={'Enter transfer amount'}
+          placeholder={'Enter amount'}
           onChange={handleChange}
           onBlur={handleBlur}
           value={values.amount}
@@ -123,23 +123,23 @@ function Transfer() {
           <input type="checkbox" name="checkbox" id="checkbox" required /> <span>I agree to the <a href="https://google.com" target="_blank" rel="noopener noreferrer">terms of use</a></span>.
         </div>
 
-        <button id="sub_btn" type="submit">Transfer</button>
+        <button id="sub_btn" type="submit">Submit</button>
 
       </form>
 		</main>
 	)
 
   return (
-    <div className="transfer">
+    <div className="onlineloan">
 
       <div className="title">
-        <h2>New Transfer</h2>
+        <h2>Get Online Loan</h2>
       </div>
 
-      {transferForm}
+      {onlineLoanForm}
 
     </div>
   )
 }
 
-export default Transfer
+export default OnlineLoan

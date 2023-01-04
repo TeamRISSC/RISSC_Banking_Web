@@ -3,9 +3,6 @@ import { Link } from "react-router-dom";
 import { DataGrid } from '@mui/x-data-grid';
 
 import {currency, date} from '../../../helpers/formatters'
-
-import popCrud from "../../../api/popCrud";
-import popAction from '../../../helpers/popAction'
 import useGetUserLoans from "../../../hooks/queries/users/useGetUserLoans";
 import useGetUserOnlineLoans from "../../../hooks/queries/users/useGetUserOnlineLoans";
 
@@ -14,22 +11,6 @@ function Loans() {
   const {data: o_loans} = useGetUserOnlineLoans();
   const loans = (p_loans && o_loans) && p_loans.concat(o_loans);
   // console.log(loans);
-
-    function createNewLoan() {
-      popAction(
-        'Are you sure?', 
-        "A new loan will be created!",
-        'Proceed!',
-        ()=>popCrud(
-          'New Loan', 
-          ['Account Number', 'Amount'], 
-          ['toAccountID', 'amount'], 
-          `/api/deposit`,
-          'POST',
-          'Successful transaction'
-        )()
-      )
-    } 
 
     const columns = [
       { 
