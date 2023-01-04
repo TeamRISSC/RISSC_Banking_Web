@@ -1,24 +1,29 @@
 import "./loans.scss"
 import { DataGrid } from '@mui/x-data-grid';
 
+import {currency, date} from '../../../helpers/formatters'
+import apiCrud from "../../../api/apiCrud";
+import popAction from '../../../helpers/popAction'
 import useGetUserLoans from "../../../hooks/queries/users/useGetUserLoans";
 
 function Loans() {
   const {data: loans} = useGetUserLoans();
   console.log(loans);
 
-    // convert date to string
-    function date(date) {
-      const display = new Date(date)
-      return display.toLocaleDateString('en-GB');
-    }
-
-    const currency = (value) => {
-      const formatter = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'LKR'});
-      return formatter.format(value).replace("LKR", "Rs.")
-    };
+    function createNewLoan() {
+      popAction(
+        'Are you sure?', 
+        "A new loan will be created!",
+        'Proceed!',
+        ()=>apiCrud(`/api/createOnlineLoan`, 'POST', 'Loan created', {
+          fixedDepositID: '73633',
+          linkedAccountID: '00001',
+          amount: '0',
+          period: '0',
+          date: '2021-09-01'
+        })()
+      )
+    } 
 
     const columns = [
       { 
@@ -57,6 +62,12 @@ function Loans() {
 
       <div className="title">
         <h2>Loans</h2>
+
+        <div className="loan-actions">
+        <button onClick={createNewLoan}>
+          + Get Online Loan
+        </button>
+        </div>
       </div>
 
       <div style={{ height: 700, width: '90%' }}>

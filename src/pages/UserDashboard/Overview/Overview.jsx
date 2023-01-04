@@ -19,22 +19,22 @@ function Overview() {
   const totalLiabs = loans && loans.map(loan => loan.amount).reduce((x, y) => +x + +y, 0);
   
   const getMonthlySums = (items) => {
-    const monthlyDeposits = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    const monthlyWithdrawals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    const monthlyInflow = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    const monthlyOutflow = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
-    if (!items) return {monthlyDeposits, monthlyWithdrawals};
+    if (!items) return {monthlyInflow, monthlyOutflow};
 
     for (const item of items) {
       const date = new Date(item.date);
       const month = date.getMonth();
-      if (item.type === 'deposit') {
-        monthlyDeposits[month] += +item.amount;
+      if (parseFloat(item.amount) > 0) {
+        monthlyInflow[month] += +item.amount;
       } 
-      else if (item.type === 'withdrawal') {
-        monthlyWithdrawals[month] += +item.amount;
+      else if (parseFloat(item.amount) < 0) {
+        monthlyOutflow[month] += -item.amount;
       }   
     }
-    return {monthlyDeposits, monthlyWithdrawals};
+    return {monthlyInflow, monthlyOutflow};
   }
 
   const currency = (value) => {

@@ -2,7 +2,7 @@ import "./accounts.scss"
 import React from 'react'
 import { DataGrid } from '@mui/x-data-grid';
 
-import popCrud from "../../../api/popCrud";
+import {currency} from '../../../helpers/formatters'
 import useGetUserSavingsAccounts from "../../../hooks/queries/users/useGetUserSavingsAccounts";
 import useGetUserCurrentAccounts from "../../../hooks/queries/users/useGetUserCurrentAccounts";
 
@@ -12,13 +12,6 @@ function Accounts() {
   const {data: c_accounts} = useGetUserCurrentAccounts();
   const accounts = c_accounts && s_accounts.concat(c_accounts);
   // console.log(accounts);
-
-  const currency = (value) => {
-    const formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'LKR'});
-    return formatter.format(value).replace("LKR", "Rs.")
-  };
 
   const account_cols = [
     { 

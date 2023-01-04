@@ -1,6 +1,8 @@
 import React from "react";
 import Chart from "react-apexcharts"
 
+import {currency} from '../../helpers/formatters';
+
 function Charts(props) {
 
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -24,7 +26,7 @@ function Charts(props) {
             // colors: '#ffffff',
           },
           formatter: function (value) {
-            return "Rs. " + value;
+            return currency(value);
           }
         },
       },
@@ -47,13 +49,13 @@ function Charts(props) {
     }
     const series = [
       {
-        name: "Deposits",
-        data: props.chartData.monthlyDeposits,
+        name: "Inflow",
+        data: props.chartData.monthlyInflow,
         color: '#254138',
       },
       {
-        name: "Withdrawals",
-        data: props.chartData.monthlyWithdrawals,
+        name: "Outflow",
+        data: props.chartData.monthlyOutflow,
         color: '#ff9d22',
       },
     ];

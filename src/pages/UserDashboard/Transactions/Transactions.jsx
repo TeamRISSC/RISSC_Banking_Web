@@ -1,23 +1,12 @@
 import "./transactions.scss"
 import { DataGrid } from '@mui/x-data-grid';
+
+import { currency, date } from "../../../helpers/formatters";
 import useGetUserTransactions from "../../../hooks/queries/users/useGetUserTransactions";
 
 function Transactions() {
   const {data: transactions} = useGetUserTransactions();
   // console.log(transactions)
-
-    // convert date to string
-    function date(date) {
-      const display = new Date(date)
-      return display.toLocaleDateString('en-GB');
-    }
-
-    const currency = (value) => {
-      const formatter = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'LKR'});
-      return formatter.format(value).replace("LKR", "Rs.")
-    };
 
     const columns = [
       { 
