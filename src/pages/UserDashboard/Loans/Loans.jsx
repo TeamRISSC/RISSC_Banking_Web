@@ -1,27 +1,33 @@
 import "./loans.scss"
+import { Link } from "react-router-dom";
 import { DataGrid } from '@mui/x-data-grid';
 
 import {currency, date} from '../../../helpers/formatters'
-import apiCrud from "../../../api/apiCrud";
+
+import popCrud from "../../../api/popCrud";
 import popAction from '../../../helpers/popAction'
 import useGetUserLoans from "../../../hooks/queries/users/useGetUserLoans";
+import useGetUserOnlineLoans from "../../../hooks/queries/users/useGetUserOnlineLoans";
 
 function Loans() {
-  const {data: loans} = useGetUserLoans();
-  console.log(loans);
+  const {data: p_loans} = useGetUserLoans();
+  const {data: o_loans} = useGetUserOnlineLoans();
+  const loans = (p_loans && o_loans) && p_loans.concat(o_loans);
+  // console.log(loans);
 
     function createNewLoan() {
       popAction(
         'Are you sure?', 
         "A new loan will be created!",
         'Proceed!',
-        ()=>apiCrud(`/api/createOnlineLoan`, 'POST', 'Loan created', {
-          fixedDepositID: '73633',
-          linkedAccountID: '00001',
-          amount: '0',
-          period: '0',
-          date: '2021-09-01'
-        })()
+        ()=>popCrud(
+          'New Loan', 
+          ['Account Number', 'Amount'], 
+          ['toAccountID', 'amount'], 
+          `/api/deposit`,
+          'POST',
+          'Successful transaction'
+        )()
       )
     } 
 
@@ -30,16 +36,10 @@ function Loans() {
         field: 'date', headerName: 'Date', type: 'date' , minWidth: 100, flex: 1
       },
       { 
-        field: 'id', headerName: 'Loan Number', minWidth: 130, flex: 1
-      },
-      { 
         field: 'amount', headerName: 'Amount', minWidth: 70, flex: 1
       },
       { 
-        field: 'class', headerName: 'Loan Type', minWidth: 130, flex: 1
-      },
-      { 
-        field: 'type', headerName: 'Loan Purpose', minWidth: 150, flex: 1
+        field: 'type', headerName: 'Loan Type', minWidth: 150, flex: 1
       },
       { 
         field: 'period', headerName: 'Time Period', minWidth: 70, flex: 1
@@ -48,11 +48,10 @@ function Loans() {
     
     const rows = loans?.map(loan => (
       {
+        id: loan.loanType + loan.ID,
         date: date(loan.applyDate),
-        id: loan.ID,
         amount: currency(loan.amount),
         period: `${loan.timePeriod} years`,
-        class: loan.loanClass,
         type: loan.loanType,
       }
     ))
@@ -64,9 +63,11 @@ function Loans() {
         <h2>Loans</h2>
 
         <div className="loan-actions">
-        <button onClick={createNewLoan}>
+        <Link to={"/userdashboard/transfer"}>
+        <button>
           + Get Online Loan
         </button>
+        </Link>
         </div>
       </div>
 

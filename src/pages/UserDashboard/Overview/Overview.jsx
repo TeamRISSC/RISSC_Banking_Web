@@ -5,16 +5,21 @@ import Charts from '../../../components/chart/Chart'
 import useGetUserSavingsAccounts from "../../../hooks/queries/users/useGetUserSavingsAccounts";
 import useGetUserCurrentAccounts from "../../../hooks/queries/users/useGetUserCurrentAccounts";
 import useGetUserLoans from "../../../hooks/queries/users/useGetUserLoans";
+import useGetUserOnlineLoans from "../../../hooks/queries/users/useGetUserOnlineLoans";
 import useGetUserTransactions from "../../../hooks/queries/users/useGetUserTransactions";
 
 function Overview() {
 
   const {data: s_accounts} = useGetUserSavingsAccounts();
   const {data: c_accounts} = useGetUserCurrentAccounts();
-  const {data: loans} = useGetUserLoans();
+  const accounts = (c_accounts && s_accounts) && s_accounts.concat(c_accounts);
+  
+  const {data: p_loans} = useGetUserLoans();
+  const {data: o_loans} = useGetUserOnlineLoans();
+  const loans = (p_loans && o_loans) && p_loans.concat(o_loans);
+
   const {data: transactions} = useGetUserTransactions();
   
-  const accounts = c_accounts && s_accounts.concat(c_accounts);
   const totalBalance = accounts && accounts.map(account => account.balance).reduce((x, y) => +x + +y, 0);
   const totalLiabs = loans && loans.map(loan => loan.amount).reduce((x, y) => +x + +y, 0);
   

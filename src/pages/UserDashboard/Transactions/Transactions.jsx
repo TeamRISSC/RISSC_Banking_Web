@@ -28,7 +28,7 @@ function Transactions() {
         date: date(transaction.date),
         id: transaction.type + transaction.ID,
         type: transaction.type,
-        amount: currency(transaction.amount),
+        amount: currency(transaction.amount.replace("-", "")),
         remarks: transaction.remarks? transaction.remarks : 'N/A',
       }
     ))
