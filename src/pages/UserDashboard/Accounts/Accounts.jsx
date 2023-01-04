@@ -3,18 +3,22 @@ import React from 'react'
 import { Link } from "react-router-dom";
 import { DataGrid } from '@mui/x-data-grid';
 
-import {currency} from '../../../helpers/formatters'
+import {currency, date} from '../../../helpers/formatters'
 import useGetUserSavingsAccounts from "../../../hooks/queries/users/useGetUserSavingsAccounts";
 import useGetUserCurrentAccounts from "../../../hooks/queries/users/useGetUserCurrentAccounts";
+import useGetUserFixedDeposits from "../../../hooks/queries/users/useGetUserFixedDeposits";
 
 function Accounts() {
   // fetch and cache all accounts
   const {data: s_accounts} = useGetUserSavingsAccounts();
   const {data: c_accounts} = useGetUserCurrentAccounts();
   const accounts = c_accounts && s_accounts.concat(c_accounts);
+
+  const {data: fixed_deposits} = useGetUserFixedDeposits();
+
   // console.log(accounts);
 
-  const account_cols = [
+  const acc_columns = [
     { 
       field: 'id', headerName: 'Account Number', minWidth: 130, flex: 1
     },
@@ -28,22 +32,26 @@ function Accounts() {
       field: 'accountType', headerName: 'Type', minWidth: 70, flex: 1
     },
     { 
+      field: 'interestRate', headerName: 'Interest Rate', minWidth: 80, flex: 1
+    },
+    { 
       field: 'branch', headerName: 'Branch', minWidth: 130, flex: 1
     },
   ];
 
-  const fd_cols = [...account_cols]
+  const fd_cols = [...acc_columns]
   fd_cols.push(    { 
     field: 'period', headerName: 'period', minWidth: 70, flex: 1
   })
   
-  const rows = accounts?.map(account => (
+  const acc_rows = accounts?.map(account => (
     {
       id: account.accountNumber,
       name: account.name,
       balance: currency(account.balance),
       accountType: account.accountType,
       branch: account.branch,
+      interestRate: account.interestRate,
     }
   ))
 
@@ -64,19 +72,19 @@ function Accounts() {
       field: 'interestRate', headerName: 'Interest Rate', minWidth: 80, flex: 1
     },
     { 
-      field: 'matuarityDate', headerName: 'Matuarity Date', minWidth: 100, flex: 1
+      field: 'matuarityDate', headerName: 'Maturity Date', minWidth: 100, flex: 1
     },
   ];
 
 
   const fd_rows = fixed_deposits?.map(fd => (
     {
-      id: fixed_deposits.ID,
-      accId: fixed_deposits.linkedAccountID,
-      amount: `Rs. ${fixed_deposits.amount}`,
-      period: `${fixed_deposits.period} months`,
-      interestRate: `${fixed_deposits.interestRate}%`,
-      matuarityDate: fixed_deposits.matuarityDate,
+      id: fd.ID,
+      accId: fd.linkedAccountID,
+      amount: currency(fd.amount),
+      period: `${fd.period} years`,
+      interestRate: `${fd.interestRate}%`,
+      matuarityDate: date(fd.maturityDate),
     }
   ))
 
@@ -101,8 +109,8 @@ function Accounts() {
             <DataGrid
               autoHeight
               className='table'
-              rows={rows}
-              columns={account_cols}
+              rows={acc_rows}
+              columns={acc_columns}
               pageSize={10}
               acc_rowsPerPageOptions={[10]}
               disableSelectionOnClick
