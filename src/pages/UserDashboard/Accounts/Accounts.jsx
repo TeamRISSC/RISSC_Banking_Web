@@ -4,11 +4,22 @@ import { DataGrid } from '@mui/x-data-grid';
 
 import popCrud from "../../../api/popCrud";
 import useGetUserSavingsAccounts from "../../../hooks/queries/users/useGetUserSavingsAccounts";
+import useGetUserCurrentAccounts from "../../../hooks/queries/users/useGetUserCurrentAccounts";
 
 function Accounts() {
   // fetch and cache all accounts
-  const {data: accounts} = useGetUserSavingsAccounts()
+  const {data: s_accounts} = useGetUserSavingsAccounts();
+  const {data: c_accounts} = useGetUserCurrentAccounts();
+  const accounts = c_accounts && s_accounts.concat(c_accounts);
   // console.log(accounts);
+
+  const currency = (value) => {
+    const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'LKR'});
+    return formatter.format(value).replace("LKR", "Rs.")
+  };
+
 
   // deposit
   function deposit() {
@@ -56,7 +67,7 @@ function Accounts() {
     {
       id: account.accountNumber,
       name: account.name,
-      balance: `Rs. ${account.balance}`,
+      balance: currency(account.balance),
       accountType: account.accountType,
       branchID: `#${account.branchID}`,
     }

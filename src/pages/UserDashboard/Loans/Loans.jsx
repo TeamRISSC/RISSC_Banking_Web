@@ -13,6 +13,13 @@ function Loans() {
       return display.toLocaleDateString('en-GB');
     }
 
+    const currency = (value) => {
+      const formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'LKR'});
+      return formatter.format(value).replace("LKR", "Rs.")
+    };
+
     const columns = [
       { 
         field: 'date', headerName: 'Date', type: 'date' , minWidth: 100, flex: 1
@@ -38,7 +45,7 @@ function Loans() {
       {
         date: date(loan.applyDate),
         id: loan.ID,
-        amount: `Rs. ${loan.amount}`,
+        amount: currency(loan.amount),
         period: `${loan.timePeriod} years`,
         class: loan.loanClass,
         type: loan.loanType,

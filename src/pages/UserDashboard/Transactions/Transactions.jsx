@@ -12,6 +12,13 @@ function Transactions() {
       return display.toLocaleDateString('en-GB');
     }
 
+    const currency = (value) => {
+      const formatter = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'LKR'});
+      return formatter.format(value).replace("LKR", "Rs.")
+    };
+
     const columns = [
       { 
         field: 'date', headerName: 'Date', type: 'date' , minWidth: 100, flex: 1
@@ -32,7 +39,7 @@ function Transactions() {
         date: date(transaction.date),
         id: transaction.type + transaction.ID,
         type: transaction.type,
-        amount: `Rs. ${+transaction["amount"] || -transaction["amount*-1"]}`,
+        amount: transaction.amount ? currency(transaction.amount) : currency(-transaction["amount*-1"]),
         remarks: transaction.remarks? transaction.remarks : 'N/A',
       }
     ))

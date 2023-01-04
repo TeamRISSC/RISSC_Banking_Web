@@ -8,7 +8,7 @@ import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import PaymentIcon from "@mui/icons-material/Payment";
 import TransformOutlinedIcon from "@mui/icons-material/TransformOutlined";
 import ViewListOutlinedIcon from "@mui/icons-material/ViewListOutlined";
-import SettingsIcon from "@mui/icons-material/Settings";
+// import SettingsIcon from "@mui/icons-material/Settings";
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import { AuthContext } from "../../context/Auth-context";
 

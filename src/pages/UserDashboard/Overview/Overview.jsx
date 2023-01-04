@@ -37,6 +37,13 @@ function Overview() {
     return {monthlyDeposits, monthlyWithdrawals};
   }
 
+  const currency = (value) => {
+    const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'LKR'});
+    return formatter.format(value).replace("LKR", "Rs.")
+  };
+
   return (
     <div className='overview'>
 
@@ -53,12 +60,12 @@ function Overview() {
 
             <div className="balance">
               <p>Total Assets</p>
-              <h3>Rs. {totalBalance && totalBalance.toFixed(2)}</h3>
+              <h3>{totalBalance && currency(totalBalance)}</h3>
             </div>
 
             <div className="balance">
               <p>Total Liablities</p>
-              <h3>Rs. {totalLiabs && totalLiabs.toFixed(2)}</h3>
+              <h3>{totalLiabs && currency(totalLiabs)}</h3>
             </div>
 
           </div>
