@@ -13,9 +13,7 @@ import Axios from "axios";
 const queryClient = new QueryClient()
 
 const pkg = require("../package.json");
-Axios.defaults.baseURL = process.env.PORT ? pkg.remote : pkg.localhost;
-// Axios.defaults.headers.post['Access-Control-Allow-Origin'] ='*';
-
+Axios.defaults.baseURL = process.env.WEBSITE_SITE_NAME ? pkg.remote : pkg.localhost;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
