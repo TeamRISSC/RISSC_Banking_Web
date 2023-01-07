@@ -52,4 +52,4 @@ jobs:
           app-name: 'RISSCBanking'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9AF3C11CF7A3431991006884845ACE6A }}
-          package: .
+          package: release.zip
