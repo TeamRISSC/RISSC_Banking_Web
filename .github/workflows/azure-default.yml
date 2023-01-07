@@ -34,7 +34,7 @@ jobs:
     needs: build
     environment:
       name: 'Production'
-      url: 'https://onlinebankingbackend.azurewebsites.net'
+      url: 'https://risscbanking.azurewebsites.net'
 
     steps:
       - name: Download artifact from build job
