@@ -4,7 +4,7 @@ import axios from "axios";
 const useGetUserLoans = async () => {
   const { data } = await axios({
     url: "/api/userLoans",
-    method: "POST",
+    method: "GET",
     headers: {
       "Authorization": `Bearer ${localStorage.jwt}`,
     },

@@ -7,6 +7,7 @@ import AdminPanel from "./pages/AdminPanel/AdminPanel";
 import UserDashboard from "./pages/UserDashboard/UserDashboard";
 import { AuthContext } from "./context/Auth-context";
 
+
 function App() {
   const { role, jwt } = useContext(AuthContext);
   // console.log(jwt)
