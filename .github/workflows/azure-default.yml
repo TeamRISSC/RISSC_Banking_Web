@@ -24,7 +24,10 @@ jobs:
           npm run build --if-present
 
       - name: Zip Build Folder
-        run: zip -r release.zip build/*
+        run: 
+          pushd build
+          zip -r ../release.zip .
+          popd
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
