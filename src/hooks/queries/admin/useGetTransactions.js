@@ -12,7 +12,7 @@ const useGetTransactions = async () => {
       "Authorization": `Bearer ${localStorage.jwt}`
     },
   });
-  return data.transactions.slice(0).reverse();
+  return data.transactions;
 };
 
 export default function useApi() {

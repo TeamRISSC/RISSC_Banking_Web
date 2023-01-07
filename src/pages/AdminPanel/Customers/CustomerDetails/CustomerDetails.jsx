@@ -12,22 +12,22 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 function CustomerDetails() {
 
-  const params = useParams()
-  const { state: userData } = useLocation()
+  const params = useParams();
+  const { state: userData } = useLocation();
 
   
   // fetch user detials
-  const { data: accountsData } = useApi("/api/admin/listAccounts/user", "POST", false, {customerID : params.userId}, `accounts ${params.userId}}`)
-  const userAccounts = accountsData?.accounts.slice(0).reverse()
+  const { data: accountsData } = useApi("/api/admin/listAccounts/user", "POST", false, {customerID : params.userId}, `accounts ${params.userId}}`);
+  const userAccounts = accountsData?.accounts;
 
-  const { data: fixedDepositsData } = useApi("/api/admin/fixedDeposits/user", "POST", false, {customerID : params.userId}, `fds ${params.userId}}`)
-  const userFixedDeposits = fixedDepositsData?.fixed_deposits.slice(0).reverse()
+  const { data: fixedDepositsData } = useApi("/api/admin/fixedDeposits/user", "POST", false, {customerID : params.userId}, `fds ${params.userId}}`);
+  const userFixedDeposits = fixedDepositsData?.fixed_deposits;
   // fetch user transactions
-  const { data: transactionsData } = useApi("/api/admin/listTransactions/user", "POST", false, {customerID : params.userId},  `transactions ${params.userId}}`)
-  const userTransactions = transactionsData?.transactions.slice(0).reverse()
+  const { data: transactionsData } = useApi("/api/admin/listTransactions/user", "POST", false, {customerID : params.userId},  `transactions ${params.userId}}`);
+  const userTransactions = transactionsData?.transactions;
 
-  const { data: loansData } = useApi("/api/admin/listLoans/user", "POST", false, {customerID : params.userId},  `loans ${params.userId}}`)
-  const userLoans = loansData?.loans.slice(0).reverse()
+  const { data: loansData } = useApi("/api/admin/listLoans/user", "POST", false, {customerID : params.userId},  `loans ${params.userId}}`);
+  const userLoans = loansData?.loans;
   
   return (
     <div className="userId">

@@ -12,6 +12,7 @@ import FixedDeposits from "./FixedDeposits/FixedDeposits";
 import Loans from "./Loans/Loans";
 import Transactions from "./Transactions/Transactions";
 import CustomerDetails from "./Customers/CustomerDetails/CustomerDetails";
+import LateInstallments from "./LateInstallments/LateInstallments";
 
 function AdminPanel() {
   // control the responsive sidebar
@@ -58,6 +59,7 @@ function AdminPanel() {
             <Route path="/fixed-deposits" element={<FixedDeposits />} />
             <Route path="/loans" element={<Loans />} />
             <Route path="/transactions" element={<Transactions />} />
+            <Route path="/lateinstallments" element={<LateInstallments />} />
           </Routes>
         </main>
       </div>

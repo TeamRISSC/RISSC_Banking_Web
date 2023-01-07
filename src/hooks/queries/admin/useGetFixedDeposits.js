@@ -10,7 +10,7 @@ const useGetFixedDeposits = async () => {
       "Authorization": `Bearer ${localStorage.jwt}`
     },
   });
-  return data.fixed_deposits.slice(0).reverse();
+  return data.fixed_deposits;
 };
 
 export default function useApi() {

@@ -22,7 +22,7 @@ export function transactionsRows(transactions) {
     const rows = transactions?.map(transaction => (
         {
             date: date(transaction.date),
-            id: transaction.ID + transaction.date,
+            id: transaction.type + transaction.ID,
             transactionType: transaction.type,
             accountNumber: transaction.accountNumber || `${transaction.fromAccountID} to ${transaction.toAccountID}`,
             amount: currency(transaction?.amount?.replace("-", "")),

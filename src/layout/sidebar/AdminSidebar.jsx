@@ -2,9 +2,12 @@ import "./sidebar.scss";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
-import LanguageIcon from "@mui/icons-material/Language";
-import DashboardIcon from "@mui/icons-material/Dashboard";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import LanguageIcon from "@mui/icons-material/Language";
+import MoneyIcon from "@mui/icons-material/Money";
+import PaymentIcon from "@mui/icons-material/Payment";
 import ViewListOutlinedIcon from "@mui/icons-material/ViewListOutlined";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
@@ -50,14 +53,14 @@ function Sidebar(props) {
 
           <Link to={"/adminpanel/fixed-deposits"}>
             <li>
-              <AccountBalanceWalletIcon className="icon" />
+              <PaymentIcon className="icon" />
               {!isSidebarActive && <p>Fixed Deposits</p>}
             </li>
           </Link>
 
           <Link to={"/adminpanel/loans"}>
             <li>
-              <AccountBalanceWalletIcon className="icon" />
+              <MoneyIcon className="icon" />
               {!isSidebarActive && <p>Loans</p>}
             </li>
           </Link>
@@ -66,6 +69,13 @@ function Sidebar(props) {
             <li>
               <ViewListOutlinedIcon className="icon" />
               {!isSidebarActive && <p>Transactions</p>}
+            </li>
+          </Link>
+
+          <Link to={"/adminpanel/lateinstallments"}>
+            <li>
+              <AccessTimeIcon className="icon" />
+              {!isSidebarActive && <p>Late Installments</p>}
             </li>
           </Link>
 

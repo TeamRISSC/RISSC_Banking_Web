@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import LanguageIcon from "@mui/icons-material/Language";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
-import PaymentIcon from "@mui/icons-material/Payment";
+import MoneyIcon from "@mui/icons-material/Money";
 import ViewListOutlinedIcon from "@mui/icons-material/ViewListOutlined";
 // import TransformOutlinedIcon from "@mui/icons-material/TransformOutlined";
 // import SettingsIcon from "@mui/icons-material/Settings";
@@ -45,7 +45,7 @@ function Sidebar(props) {
 
           <Link to={"/userdashboard/loans"}>
             <li>
-              <PaymentIcon className="icon" />
+              <MoneyIcon className="icon" />
               {!isSidebarActive && <p>Loans</p>}
             </li>
           </Link>

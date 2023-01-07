@@ -10,7 +10,7 @@ const useGetLoans = async () => {
       "Authorization": `Bearer ${localStorage.jwt}`
     },
   });
-  return data.loans.slice(0).reverse();
+  return data.loans;
 };
 
 export default function useApi() {

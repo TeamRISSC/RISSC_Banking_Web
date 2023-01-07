@@ -12,7 +12,7 @@ const useGetAccounts = async () => {
       "Authorization": `Bearer ${localStorage.jwt}`
     },
   });
-  return data.accounts.slice(0).reverse();
+  return data.accounts;
 };
 
 export default function useApi() {

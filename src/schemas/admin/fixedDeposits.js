@@ -2,10 +2,10 @@ import {currency, date} from '../../helpers/formatters'
 
 export const fixedDepositsColumns = [
     { 
-      field: 'id', headerName: 'Fixed Deposit Number', minWidth: 130, flex: 1
+      field: 'id', headerName: 'FD No', minWidth: 130, flex: 0.5
     },
     { 
-      field: 'accId', headerName: 'Linked Account Number', minWidth: 130, flex: 1
+      field: 'accId', headerName: 'Savings Account No', minWidth: 130, flex: 1
     },
     { 
       field: 'amount', headerName: 'Amount', minWidth: 80, flex: 1

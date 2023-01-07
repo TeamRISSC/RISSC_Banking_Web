@@ -1,20 +1,20 @@
 import { useQuery } from "react-query";
 import axios from "axios";
 
-const useGetOnlineLoans = async () => {
+const useGetLoans = async () => {
 
   const { data } = await axios({
-    url: '/api/listOnlineLoans/',
+    url: '/api/manager/lateinstallments/late/',
     method: 'GET',
     headers: {
       "Authorization": `Bearer ${localStorage.jwt}`
     },
   });
-  return data.online_loans;
+  return data.loan_installments.concat(data.online_loan_installments);
 };
 
 export default function useApi() {
-  return useQuery(["all_online_loans"], useGetOnlineLoans, {
+  return useQuery(["late_installments"], useGetLoans, {
     refetchOnMount: false,
     refetchOnWindowFocus: false
   });

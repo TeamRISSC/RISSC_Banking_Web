@@ -12,7 +12,7 @@ const useGetUsers = async () => {
       "Authorization": `Bearer ${localStorage.jwt}`
     },
   });
-  return data.users.slice(0).reverse();
+  return data.users;
 };
 
 export default function useApi() {
