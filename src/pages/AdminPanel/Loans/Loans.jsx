@@ -1,32 +1,26 @@
 import "./loans.scss"
-import { Link } from "react-router-dom";
+import React from 'react'
 import { DataGrid } from '@mui/x-data-grid';
 
 import { loansColumns, loansRows } from "../../../schemas/admin/loans";
 
-import useGetUserLoans from "../../../hooks/queries/users/useGetUserLoans";
-import useGetUserOnlineLoans from "../../../hooks/queries/users/useGetUserOnlineLoans";
+import useGetLoans from '../../../hooks/queries/admin/useGetLoans'
+import useGetOnlineLoans from '../../../hooks/queries/admin/useGetOnlineLoans'
 
 function Loans() {
-  const {data: p_loans} = useGetUserLoans();
-  const {data: o_loans} = useGetUserOnlineLoans();
+
+  // fetch and cache all accounts
+  const {data: p_loans} = useGetLoans();
+  const {data: o_loans} = useGetOnlineLoans();
   const loans = (p_loans && o_loans) && p_loans.concat(o_loans);
-  // console.log(loans);
 
   return (
-    <div className="loans">
+    <div className="accounts">
 
       <div className="title">
         <h2>Loans</h2>
-        <div className="loan-actions">
-        <Link to={"/userdashboard/onlineloan"}>
-        <button>
-          + Get Online Loan
-        </button>
-        </Link>
-        </div>
       </div>
-
+      
       <div style={{ height: 700, width: '90%' }}>
         <div style={{ display: 'flex', height: '100%' }}>
           <div className="table-container">
@@ -49,7 +43,6 @@ function Loans() {
           </div>
         </div>
       </div>
-
     </div>
   )
 }

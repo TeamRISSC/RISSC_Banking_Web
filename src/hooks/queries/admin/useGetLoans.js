@@ -1,22 +1,20 @@
 import { useQuery } from "react-query";
 import axios from "axios";
 
-const useGetUsers = async () => {
-
-  // fetch all users
+const useGetLoans = async () => {
 
   const { data } = await axios({
-    url: '/api/admin/listUsers',
+    url: '/api/listLoans/',
     method: 'GET',
     headers: {
       "Authorization": `Bearer ${localStorage.jwt}`
     },
   });
-  return data.users.slice(0).reverse();
+  return data.loans.slice(0).reverse();
 };
 
 export default function useApi() {
-  return useQuery(["all_users"], useGetUsers, {
+  return useQuery(["all_loans"], useGetLoans, {
     refetchOnMount: false,
     refetchOnWindowFocus: false
   });

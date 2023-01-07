@@ -1,11 +1,10 @@
 import "./accounts.scss"
 import React from 'react'
 import { DataGrid } from '@mui/x-data-grid';
-import Button from '@mui/material/Button';
+
+import {currency} from '../../../helpers/formatters'
 
 import useGetAccounts from '../../../hooks/queries/admin/useGetAccounts'
-import popAction from "../../../helpers/popAction";
-import apiCrud from "../../../api/apiCrud";
 
 function Accounts() {
 
@@ -13,51 +12,9 @@ function Accounts() {
   const {data: accounts} = useGetAccounts()
   // console.log(accounts);
 
-  // convert date to string
-  function date(date) {
-    const display = new Date(date)
-    return display.toLocaleDateString('en-GB');
-  }
-
-  const usersActions = (params) => (
-
-    params.row.accountStatus !== 'closed' &&
-    
-    <div className='actions'>
-      {params.row.accountStatus === 'active'
-      ?
-        <Button variant="contained" className="deactivate"
-          onClick={() => popAction(
-            'Are you sure?', 
-            "The account will be deactivated!",
-            'Deactivate!',
-            ()=>apiCrud(`/api/approval`, 'POST', 'Account deactivated', {
-              accountNumber: params.row.id,
-              accountStatus: 'pending'
-            })()
-            )}>
-          Deactivate
-        </Button> 
-      :
-        <Button variant="contained" className="activate"
-          onClick={() => popAction(
-            'Are you sure?', 
-            "The account will be activated!",
-            'Activate!',
-            ()=>apiCrud(`/api/approval`, 'POST', 'Account activated', {
-              accountNumber: params.row.id,
-              accountStatus: 'active'
-            })()
-          )}>
-          Activate
-        </Button>            
-      }
-    </div>
-  )
-
   const columns = [
     { 
-      field: 'id', headerName: 'Account Number', minWidth: 130, flex: 2
+      field: 'id', headerName: 'Account No', minWidth: 100, flex: 1
     },
     { 
       field: 'accountBalance', headerName: 'Balance', minWidth: 80, flex: 1
@@ -65,33 +22,29 @@ function Accounts() {
     { 
       field: 'accountType', headerName: 'Type', minWidth: 70, flex: 1
     },
-    { 
-      field: 'customerID', headerName: 'User ID', minWidth: 130, flex: 3
+    {
+      field: 'branch', headerName: 'Branch', minWidth: 80, flex: 1
     },
     { 
-      field: 'accountStatus', headerName: 'Status', minWidth: 80, flex: 1
+      field: 'interestRate', headerName: 'Interest Rate' , minWidth: 100, flex: 1
     },
-    { 
-      field: 'date', headerName: 'Date', type: 'date' , minWidth: 100, flex: 1
+    {
+      field: 'maxWithdrawals', headerName: 'Max Withdrawals', minWidth: 80, flex: 1
     },
-    { 
-      field: 'actions', 
-      headerName: 'Actions', 
-      minWidth: 110,
-      flex: 1,
-      align: 'center',
-      renderCell: (params) => usersActions(params)
+    {
+      field: 'currentWithdrawals', headerName: 'Current Withdrawals', minWidth: 80, flex: 1
     },
   ];
   
   const rows = accounts?.map(account => (
     {
       id: account.accountNumber,
-      accountBalance: `$${account.accountBalance}`,
+      accountBalance: currency(account.balance),
       accountType: account.accountType,
-      customerID: `#${account.customerID}`,
-      accountStatus: account.accountStatus,
-      date: date(account.createdAt),
+      branch: account.branch,
+      interestRate: account.interestRate,
+      maxWithdrawals: account.maxWithdrawals,
+      currentWithdrawals: account.currentWithdrawals,
     }
   ))
 

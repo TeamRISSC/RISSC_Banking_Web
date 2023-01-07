@@ -1,11 +1,11 @@
-import "./users.scss"
+import "./customers.scss"
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { DataGrid } from '@mui/x-data-grid';
 
 import useGetUsers from '../../../hooks/queries/admin/useGetUsers'
 
-function Users() {
+function Customers() {
 
   const navigate = useNavigate()
 
@@ -13,45 +13,36 @@ function Users() {
   const {data: users} = useGetUsers()
   // console.log(users);
 
-  // convert date to string
-  function date(date) {
-    const display = new Date(date)
-    return display.toLocaleDateString('en-GB');
-  }
-
   const columns = [
     { 
-      field: 'id', headerName: 'ID', minWidth: 150, flex: 3
+      field: 'id', headerName: 'ID', minWidth: 150, flex: 0.5
     },
     { 
-      field: 'fullName', headerName: 'Full name', minWidth: 150, flex: 3 
+      field: 'type', headerName: 'Type', minWidth: 70, flex: 2
+    },
+    { 
+      field: 'name', headerName: 'Full name', minWidth: 150, flex: 3 
+    },
+    { 
+      field: 'username', headerName: 'Username', minWidth: 150, flex: 2
     },
     { 
       field: 'email', headerName: 'Email', minWidth: 150, flex: 3 
     },
     { 
-      field: 'phone', headerName: 'Phone', minWidth: 150, flex: 3
-    },
-    { 
-      field: 'role', headerName: 'Role', minWidth: 70, flex: 1 
-    },
-    { 
-      field: 'authorized', headerName: 'Authorized', type: 'boolean', minWidth: 70, flex: 1 
-    },
-    { 
-      field: 'date', headerName: 'Date', type: 'date' , minWidth: 100, flex: 1 
+      field: 'phone', headerName: 'Phone', minWidth: 150, flex: 2
     },
   ];
   
   const rows = users?.map(user => (
     {
-      id: user._id,
-      fullName: user.fullName, 
+      id: user.ID,
+      name: user.name, 
+      username: user.username,
       email: user.email, 
-      phone: user.phone, 
-      role: user.role, 
-      authorized: user.authorized, 
-      date: date(user.createdAt),
+      phone: user.contactNumber, 
+      address: user.address, 
+      type: user.type, 
     }
   ))
 
@@ -59,9 +50,11 @@ function Users() {
     <div className="users">
 
       <div className="title">
-        <h2>Users</h2>
+        <h2>Customers</h2>
       </div>
-      
+      <p>
+        Click on customer to see user specific information 
+      </p>
       <div style={{ height: 700, width: '90%' }}>
         <div style={{ display: 'flex', height: '100%' }}>
           <div className="table-container">
@@ -80,13 +73,13 @@ function Users() {
                   },
                 }}
                 onRowClick={params => (
-                  navigate(`/adminpanel/users/${params.row.id}`, {
+                  navigate(`/adminpanel/customers/${params.row.id}`, {
                     state: {
-                      userName: params.row.fullName,
-                      userEmail: params.row.email,
-                      userPhone: params.row.phone,
-                      date: params.row.date,
-                      authorized: params.row.authorized,
+                      name: params.row.name,
+                      username: params.row.username,
+                      email: params.row.email,
+                      phone: params.row.phone,
+                      address: params.row.address,
                     }
                   })
                 )}
@@ -100,4 +93,4 @@ function Users() {
   )
 }
 
-export default Users
+export default Customers

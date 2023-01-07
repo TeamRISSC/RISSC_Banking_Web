@@ -44,7 +44,7 @@ export default function Login() {
       }
     })
     .then((res) => {
-      console.log('successfully logged in');
+      console.log('Successfully logged user');
       localStorage.setItem('jwt', res.data.token);
       console.log(res.data)
       signIn(res.data);
@@ -54,21 +54,46 @@ export default function Login() {
       return res.data;
     })
     .catch(
-      (error) => {
-        if (error.response) {
-          // Request made and server responded
-          setErrorMessages(error.response.data.message)
-        } else if (error.request) {
-          // The request was made but no response was received
-          console.log(error.request)
-          setErrorMessages('No response!')
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log('Error', error.message)
-          setErrorMessages('Somthing wrong!')
-        }
+      async (error) => {
+        await axios({
+          url:  `/api/employee/signin`,
+          method: 'POST',
+          data: {
+            username: login.username.trim(),
+            password: login.password
+          }
+        })
+        .then((res) => {
+          console.log('Successfully logged employee');
+          localStorage.setItem('jwt', res.data.token);
+          console.log(res.data)
+          signIn(res.data);
+          console.log(localStorage.jwt)
+          popAlert(`Welcome Back`);
+          navigate('/');
+          return res.data;
+        })
+        .catch(
+          (error) => {
+            if (error.response) {
+              // Request made and server responded
+              setErrorMessages(error.response.data.message)
+            } else if (error.request) {
+              // The request was made but no response was received
+              console.log(error.request)
+              setErrorMessages('No response!')
+            } else {
+              // Something happened in setting up the request that triggered an Error
+              console.log('Error', error.message)
+              setErrorMessages('Somthing wrong!')
+            }
+          }
+        )
+
+
       }
     )
+
   }
 
   // Generate JSX code for login form

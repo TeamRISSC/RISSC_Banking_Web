@@ -6,7 +6,7 @@ const useGetAccounts = async () => {
   // fetch all accounts
 
   const { data } = await axios({
-    url: '/api/listAccounts/',
+    url: '/api/admin/listAccounts',
     method: 'GET',
     headers: {
       "Authorization": `Bearer ${localStorage.jwt}`
@@ -16,7 +16,7 @@ const useGetAccounts = async () => {
 };
 
 export default function useApi() {
-  return useQuery(["accounts"], useGetAccounts, {
+  return useQuery(["all_accounts"], useGetAccounts, {
     refetchOnMount: false,
     refetchOnWindowFocus: false
   });

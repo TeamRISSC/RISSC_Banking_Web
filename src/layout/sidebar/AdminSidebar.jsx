@@ -6,7 +6,6 @@ import LanguageIcon from "@mui/icons-material/Language";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import ViewListOutlinedIcon from "@mui/icons-material/ViewListOutlined";
-import SettingsIcon from "@mui/icons-material/Settings";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import { AuthContext } from "../../context/Auth-context";
@@ -15,7 +14,7 @@ function Sidebar(props) {
   // import signout fnc form auth context
   const { signOut } = useContext(AuthContext);
 
-  // destracture props
+  // destructure props
   const { isSidebarActive, toggleSidebar } = props;
 
   return (
@@ -35,10 +34,10 @@ function Sidebar(props) {
             </li>
           </Link>
 
-          <Link to={"/adminpanel/users"}>
+          <Link to={"/adminpanel/customers"}>
             <li>
               <AccountCircleIcon className="icon" />
-              {!isSidebarActive && <p>Users</p>}
+              {!isSidebarActive && <p>Customers</p>}
             </li>
           </Link>
 
@@ -49,6 +48,20 @@ function Sidebar(props) {
             </li>
           </Link>
 
+          <Link to={"/adminpanel/fixed-deposits"}>
+            <li>
+              <AccountBalanceWalletIcon className="icon" />
+              {!isSidebarActive && <p>Fixed Deposits</p>}
+            </li>
+          </Link>
+
+          <Link to={"/adminpanel/loans"}>
+            <li>
+              <AccountBalanceWalletIcon className="icon" />
+              {!isSidebarActive && <p>Loans</p>}
+            </li>
+          </Link>
+
           <Link to={"/adminpanel/transactions"}>
             <li>
               <ViewListOutlinedIcon className="icon" />
@@ -56,16 +69,9 @@ function Sidebar(props) {
             </li>
           </Link>
 
-          <Link to={"/adminpanel/settings"}>
-            <li>
-              <SettingsIcon className="icon" />
-              {!isSidebarActive && <p>Settings</p>}
-            </li>
-          </Link>
-
           <li onClick={signOut}>
             <ExitToAppOutlinedIcon className="icon" />
-            {!isSidebarActive && <p>Signout</p>}
+            {!isSidebarActive && <p>Sign Out</p>}
           </li>
         </ul>
       </div>

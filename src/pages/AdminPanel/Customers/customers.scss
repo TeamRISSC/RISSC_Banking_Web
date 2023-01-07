@@ -14,6 +14,10 @@
     display: flex;
     justify-content: flex-start;
   }
+  p {
+    align-self: start;
+    margin-left: 5em;
+  }
   .table-container {
     flex-grow: 1;
     display: flex;

@@ -20,13 +20,13 @@
     padding: 2em;
     z-index: 10;
 
-    .search {
+    .displayname {
       display: flex;
       align-items: center;
       border: $border;
       padding: 3px;
       border-radius: 5px;
-      padding-left: 1em;
+      padding: 0.7em;
 
       input {
         border: none;

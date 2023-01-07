@@ -6,7 +6,7 @@ const useGetTransactions = async () => {
   // fetch all transactions
 
   const { data } = await axios({
-    url: '/api/listTransactions/',
+    url: '/api/admin/listTransactions/',
     method: 'GET',
     headers: {
       "Authorization": `Bearer ${localStorage.jwt}`
@@ -16,7 +16,7 @@ const useGetTransactions = async () => {
 };
 
 export default function useApi() {
-  return useQuery(["transactions"], useGetTransactions, {
+  return useQuery(["all_transactions"], useGetTransactions, {
     refetchOnMount: false,
     refetchOnWindowFocus: false
   });

@@ -3,7 +3,6 @@ import React from "react";
 import CustomizedDialogs from "../../components/dialog/Dialog";
 
 import LanguageIcon from "@mui/icons-material/Language";
-import Register from "../../components/register/Register";
 import Login from "../../components/login/Login";
 
 function Homepage() {
@@ -34,14 +33,6 @@ function Homepage() {
           <div className="homepage-sign-btns">
             <CustomizedDialogs title="Sign In" btn="Sign In">
               <Login />
-            </CustomizedDialogs>
-
-            <CustomizedDialogs
-              title="Sign Up"
-              btn="Sign Up"
-              style={{ color: "#007bff" }}
-            >
-              <Register />
             </CustomizedDialogs>
           </div>
         </section>

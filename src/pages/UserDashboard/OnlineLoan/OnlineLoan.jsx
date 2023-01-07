@@ -6,22 +6,15 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { onlineLoanSchema } from "../../../schemas/onlineLoanSchema";
 import popAction from "../../../helpers/popAction";
 import apiCrud from "../../../api/apiCrud";
-import useGetUserCurrentAccounts from "../../../hooks/queries/users/useGetUserSavingsAccounts";
-import useGetUserSavingsAccounts from "../../../hooks/queries/users/useGetUserCurrentAccounts";
 import useGetUserFixedDeposits from "../../../hooks/queries/users/useGetUserFixedDeposits";
 
 function OnlineLoan() {
-  const {data: s_accounts} = useGetUserSavingsAccounts();
-  const {data: c_accounts} = useGetUserCurrentAccounts();
-  const accounts = c_accounts && s_accounts.concat(c_accounts).sort((a, b) => +a.accountNumber - +b.accountNumber);
-
   const {data: fixed_deposits} = useGetUserFixedDeposits();
 
   // handle user inputs
 	const { values, errors, touched, handleBlur, handleChange, handleSubmit} = useFormik({
 		initialValues: {
 			fixedDepositID: '',
-			linkedAccountID: '',
 			amount: '',
       period: '',
 		},
@@ -29,11 +22,10 @@ function OnlineLoan() {
 		onSubmit: (values)=> { 
       popAction(
         'Are you sure?', 
-        `$A loan of Rs. ${values.amount} will be deposited to account ${values.linkedAccountID}`,
+        `$A loan of Rs. ${values.amount} will be created to be paid in ${values.period} years.`,
         'Proceed',
         ()=>apiCrud(`/api/createOnlineLoan`, 'POST', 'Successful transaction', {
           fixedDepositID: values.fixedDepositID,
-          linkedAccountID: values.linkedAccountID,
           amount: values.amount,
           period: values.period,
           date: new Date().toISOString().slice(0, 10),
@@ -77,18 +69,6 @@ function OnlineLoan() {
             :
             null
           }
-        </div>
-
-        <div className="input-holder">
-          <label>Account to Deposit Loan</label><br/>
-          <select 
-              name="linkedAccountID"
-              value={values.linkedAccountID}
-              onChange={handleChange}
-              onBlur={handleBlur}>
-            {accounts?.map((accounts) => (
-              <option value={accounts.accountNumber}>{accounts.accountNumber}</option>))}
-          </select>
         </div>
 
         <div className="input-holder">

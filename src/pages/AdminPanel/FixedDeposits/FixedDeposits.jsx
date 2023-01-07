@@ -1,32 +1,33 @@
-import "./transactions.scss"
+import "./fixeddeposits.scss"
+import React from 'react'
 import { DataGrid } from '@mui/x-data-grid';
 
-import { transactionsColumns, transactionsRows } from "../../../schemas/admin/transactions";
+import { fixedDepositsColumns, fixedDepositsRows } from "../../../schemas/admin/fixedDeposits";
 
-import useGetTransactions from "../../../hooks/queries/admin/useGetTransactions";
+import useGetFixedDeposits from '../../../hooks/queries/admin/useGetFixedDeposits'
 
-function Transactions() {
+function FixedDeposits() {
 
-  // fetch and cache all transactions
-  const {data: transactions} = useGetTransactions()
-  // console.log(transactions)
+  // fetch and cache all accounts
+  const {data: fixed_deposits} = useGetFixedDeposits()
+  // console.log(accounts);
 
   return (
-    <div className="transactions">
+    <div className="accounts">
 
       <div className="title">
-        <h2>Transactions</h2>
+        <h2>Fixed Deposits</h2>
       </div>
-
+      
       <div style={{ height: 700, width: '90%' }}>
         <div style={{ display: 'flex', height: '100%' }}>
           <div className="table-container">
-            {transactions &&
+            {fixed_deposits &&
             <DataGrid
               autoHeight
               className='table'
-              rows={transactionsRows(transactions)}
-              columns={transactionsColumns}
+              rows={fixedDepositsRows(fixed_deposits)}
+              columns={fixedDepositsColumns}
               pageSize={10}
               rowsPerPageOptions={[10]}
               disableSelectionOnClick
@@ -45,4 +46,4 @@ function Transactions() {
   )
 }
 
-export default Transactions
+export default FixedDeposits

@@ -14,7 +14,7 @@ function App() {
   return (
     <div className="App">
       {jwt ? (
-        role === "admin" ? (
+        (role === "employee" || role === "manager") ? (
           <Routes>
             <Route path="/adminpanel/*" element={<AdminPanel />} />
             <Route path="*" element={<Navigate to="/adminpanel" replace />} />
