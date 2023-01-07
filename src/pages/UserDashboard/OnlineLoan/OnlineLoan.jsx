@@ -2,6 +2,8 @@ import "./onlineloan.scss"
 import React from 'react'
 import {useFormik} from 'formik'
 
+import { date } from "../../../helpers/formatters";
+
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { onlineLoanSchema } from "../../../schemas/onlineLoanSchema";
 import popAction from "../../../helpers/popAction";
@@ -14,21 +16,27 @@ function OnlineLoan() {
   // handle user inputs
 	const { values, errors, touched, handleBlur, handleChange, handleSubmit} = useFormik({
 		initialValues: {
-			fixedDepositID: '',
+      branchID: "00001",
+      customerID : '',
+			FDID: '',
 			amount: '',
-      period: '',
+      applyDate: '',
+      timePeriod: '',
+      linkedAccountID: '',
 		},
 		validationSchema: onlineLoanSchema,
 		onSubmit: (values)=> { 
       popAction(
         'Are you sure?', 
-        `$A loan of Rs. ${values.amount} will be created to be paid in ${values.period} years.`,
+        `A loan of Rs. ${values.amount} will be created to be paid in ${values.timePeriod} years.`,
         'Proceed',
         ()=>apiCrud(`/api/createOnlineLoan`, 'POST', 'Successful transaction', {
-          fixedDepositID: values.fixedDepositID,
+          customerID: values.fixedDeposit.customerID,
+          FDID: values.fixedDeposit.ID,
           amount: values.amount,
-          period: values.period,
-          date: new Date().toISOString().slice(0, 10),
+          applyDate: date(new Date()),
+          timePeriod: values.timePeriod,
+          linkedAccountID: values.fixedDeposit.linkedAccountID,
         })()
       )
 		}
@@ -41,12 +49,12 @@ function OnlineLoan() {
         <div className="input-holder">
           <label>Linked Fixed Deposit Number</label><br/>
           <select 
-              name="fixedDepositID"
-              value={values.fixedDepositID}
+              name="fixedDeposit"
+              value={values.fixedDeposit}
               onChange={handleChange}
               onBlur={handleBlur}>
             {fixed_deposits?.map((fixed_deposit) => (
-              <option value={fixed_deposit.ID}>{fixed_deposit.ID}</option>))}
+              <option value={fixed_deposit}>{fixed_deposit.ID}</option>))}
           </select>
         </div>
 
@@ -80,12 +88,12 @@ function OnlineLoan() {
           placeholder={'Enter time period in years'}
           onChange={handleChange}
           onBlur={handleBlur}
-          value={values.period}
+          value={values.timePeriod}
           />							
-          {touched.period 
+          {touched.timePeriod 
             ? 
-              errors.period 
-              ? <p className="error">{errors.period}</p> 
+              errors.timePeriod 
+              ? <p className="error">{errors.timePeriod}</p> 
               : <CheckCircleIcon className='icon'/>
             :
             null
