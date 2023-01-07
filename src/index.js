@@ -13,7 +13,7 @@ import Axios from "axios";
 const queryClient = new QueryClient()
 
 const pkg = require("../package.json");
-Axios.defaults.baseURL = process.env.WEBSITE_SITE_NAME ? pkg.remote : pkg.localhost;
+Axios.defaults.baseURL = pkg.remote;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
