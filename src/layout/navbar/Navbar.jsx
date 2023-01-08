@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './navbar.scss'
 
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
@@ -6,8 +6,12 @@ import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import FullscreenExitOutlinedIcon from '@mui/icons-material/FullscreenExitOutlined';
 import ListOutlinedIcon from '@mui/icons-material/ListOutlined';
 import useApi from '../../hooks/useApi';
+import { AuthContext } from "../../context/Auth-context";
+
 
 function Navbar(props) {
+
+  const { role } = useContext(AuthContext);
 
   const {isSidebarActive} = props
   const { data } = useApi("/api/user", "GET")
@@ -18,7 +22,7 @@ function Navbar(props) {
       <div className="wrapper">
 
         <div className="displayname">
-          <p>{data?.name}</p>
+          <p>{(role === "manager" ? "Manager " : "") + data?.name}</p>
         </div>
 
         <div className="items">

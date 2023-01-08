@@ -8,11 +8,11 @@ import withReactContent from 'sweetalert2-react-content'
 
 const MySwal = withReactContent(Swal)
 
-function popAlert(tittle, icon) {
+function popAlert(in_title, icon) {
 
   MySwal.fire({
     icon: icon ? icon : 'success',
-    title: tittle ? <i>{tittle}</i> : 'Done!',
+    title: in_title ? <i>{in_title}</i> : 'Invalid!',
     html: <i></i>,
   })
 }

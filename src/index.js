@@ -8,12 +8,22 @@ import {QueryClientProvider, QueryClient} from 'react-query'
 import { AuthProvider } from './context/Auth-context';
 import { ThemeProvider } from '@mui/material';
 import { theme } from './theme';
-import Axios from "axios";
+import axios from "axios";
 
 const queryClient = new QueryClient()
 
 const pkg = require("../package.json");
-Axios.defaults.baseURL = pkg.remote;
+
+axios.get(pkg.localhost).then((res) => {
+    if(res.status === 200) {
+      axios.defaults.baseURL = pkg.localhost;
+      console.log('localhost exists')
+    }
+    else {
+      axios.defaults.baseURL = pkg.remote;
+      console.log('localhost does not exist')
+    }
+})
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

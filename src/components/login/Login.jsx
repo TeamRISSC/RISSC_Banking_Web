@@ -77,7 +77,7 @@ export default function Login() {
           (error) => {
             if (error.response) {
               // Request made and server responded
-              setErrorMessages(error.response.data.message)
+              setErrorMessages("Invalid Username or Password")
             } else if (error.request) {
               // The request was made but no response was received
               console.log(error.request)

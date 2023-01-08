@@ -23,6 +23,7 @@ function OnlineLoan() {
       applyDate: '',
       timePeriod: '',
       linkedAccountID: '',
+      fixedDepositIndex: 0,
 		},
 		validationSchema: onlineLoanSchema,
 		onSubmit: (values)=> { 
@@ -31,12 +32,13 @@ function OnlineLoan() {
         `A loan of Rs. ${values.amount} will be created to be paid in ${values.timePeriod} years.`,
         'Proceed',
         ()=>apiCrud(`/api/createOnlineLoan`, 'POST', 'Successful transaction', {
-          customerID: values.fixedDeposit.customerID,
-          FDID: values.fixedDeposit.ID,
+          branchID: values.branchID,
+          customerID: fixed_deposits[values.fixedDepositIndex].customerID,
+          FDID: fixed_deposits[values.fixedDepositIndex].ID,
           amount: values.amount,
           applyDate: date(new Date()),
           timePeriod: values.timePeriod,
-          linkedAccountID: values.fixedDeposit.linkedAccountID,
+          linkedAccountID: fixed_deposits[values.fixedDepositIndex].linkedAccountID,
         })()
       )
 		}
@@ -50,11 +52,11 @@ function OnlineLoan() {
           <label>Linked Fixed Deposit Number</label><br/>
           <select 
               name="fixedDeposit"
-              value={values.fixedDeposit}
+              value={values.fixedDepositIndex}
               onChange={handleChange}
               onBlur={handleBlur}>
-            {fixed_deposits?.map((fixed_deposit) => (
-              <option value={fixed_deposit}>{fixed_deposit.ID}</option>))}
+              {fixed_deposits?.map((fixed_deposit, index) => (
+                <option key={index} value={index}>{fixed_deposit.ID}</option>))}
           </select>
         </div>
 
@@ -83,7 +85,7 @@ function OnlineLoan() {
           <label>Time Period (Years)</label><br/>
           <input 
           type="text" 
-          name="period" 
+          name="timePeriod" 
           required
           placeholder={'Enter time period in years'}
           onChange={handleChange}
