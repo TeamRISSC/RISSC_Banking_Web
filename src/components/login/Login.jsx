@@ -46,9 +46,9 @@ export default function Login() {
     .then((res) => {
       console.log('Successfully logged user');
       localStorage.setItem('jwt', res.data.token);
-      console.log(res.data)
+      // console.log(res.data)
       signIn(res.data);
-      console.log(localStorage.jwt)
+      // console.log(localStorage.jwt)
       popAlert(`Welcome Back`);
       navigate('/');
       return res.data;
@@ -66,9 +66,9 @@ export default function Login() {
         .then((res) => {
           console.log('Successfully logged employee');
           localStorage.setItem('jwt', res.data.token);
-          console.log(res.data)
+          // console.log(res.data)
           signIn(res.data);
-          console.log(localStorage.jwt)
+          // console.log(localStorage.jwt)
           popAlert(`Welcome Back`);
           navigate('/');
           return res.data;
