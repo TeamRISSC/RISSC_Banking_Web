@@ -1,8 +1,9 @@
 import "./adminpanel.scss";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 
+import { AuthContext } from "../../context/Auth-context";
 import Sidebar from "../../layout/sidebar/AdminSidebar";
 import Navbar from "../../layout/navbar/Navbar";
 import Customers from "./Customers/Customers";
@@ -17,6 +18,7 @@ import LateInstallments from "./LateInstallments/LateInstallments";
 function AdminPanel() {
   // control the responsive sidebar
   const [isSidebarActive, setIsSidebarActive] = useState(false);
+  const { role } = useContext(AuthContext);
 
   // toggle sidebar
   function toggleSidebar() {
@@ -59,7 +61,7 @@ function AdminPanel() {
             <Route path="/fixed-deposits" element={<FixedDeposits />} />
             <Route path="/loans" element={<Loans />} />
             <Route path="/transactions" element={<Transactions />} />
-            <Route path="/lateinstallments" element={<LateInstallments />} />
+            {role === "manager" && <Route path="/lateinstallments" element={<LateInstallments />} />}
           </Routes>
         </main>
       </div>

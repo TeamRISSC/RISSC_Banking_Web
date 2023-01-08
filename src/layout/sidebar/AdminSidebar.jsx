@@ -15,7 +15,7 @@ import { AuthContext } from "../../context/Auth-context";
 
 function Sidebar(props) {
   // import signout fnc form auth context
-  const { signOut } = useContext(AuthContext);
+  const { role, signOut } = useContext(AuthContext);
 
   // destructure props
   const { isSidebarActive, toggleSidebar } = props;
@@ -72,12 +72,12 @@ function Sidebar(props) {
             </li>
           </Link>
 
-          <Link to={"/adminpanel/lateinstallments"}>
+          {role === "manager" && <Link to={"/adminpanel/lateinstallments"}>
             <li>
               <AccessTimeIcon className="icon" />
               {!isSidebarActive && <p>Late Installments</p>}
             </li>
-          </Link>
+          </Link>}
 
           <li onClick={signOut}>
             <ExitToAppOutlinedIcon className="icon" />
