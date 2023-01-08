@@ -16,14 +16,10 @@ function OnlineLoan() {
   // handle user inputs
 	const { values, errors, touched, handleBlur, handleChange, handleSubmit} = useFormik({
 		initialValues: {
-      branchID: "00001",
-      customerID : '',
 			FDID: '',
 			amount: '',
       applyDate: '',
       timePeriod: '',
-      linkedAccountID: '',
-      fixedDepositIndex: 0,
 		},
 		validationSchema: onlineLoanSchema,
 		onSubmit: (values)=> { 
@@ -32,13 +28,10 @@ function OnlineLoan() {
         `A loan of Rs. ${values.amount} will be created to be paid in ${values.timePeriod} years.`,
         'Proceed',
         ()=>apiCrud(`/api/createOnlineLoan`, 'POST', 'Successful transaction', {
-          branchID: values.branchID,
-          customerID: fixed_deposits[values.fixedDepositIndex].customerID,
-          FDID: fixed_deposits[values.fixedDepositIndex].ID,
+          FDID: values.FDID,
           amount: values.amount,
           applyDate: date(new Date()),
           timePeriod: values.timePeriod,
-          linkedAccountID: fixed_deposits[values.fixedDepositIndex].linkedAccountID,
         })()
       )
 		}
@@ -51,12 +44,12 @@ function OnlineLoan() {
         <div className="input-holder">
           <label>Linked Fixed Deposit Number</label><br/>
           <select 
-              name="fixedDeposit"
-              value={values.fixedDepositIndex}
+              name="FDID"
+              value={values.FDID}
               onChange={handleChange}
               onBlur={handleBlur}>
-              {fixed_deposits?.map((fixed_deposit, index) => (
-                <option key={index} value={index}>{fixed_deposit.ID}</option>))}
+              {fixed_deposits?.map((fixed_deposit) => (
+                <option value={fixed_deposit.ID}>{fixed_deposit.ID}</option>))}
           </select>
         </div>
 
