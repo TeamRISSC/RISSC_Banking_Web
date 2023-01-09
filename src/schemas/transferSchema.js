@@ -5,9 +5,6 @@ export const transferSchema = yup.object({
     .positive('Enter a vaild amount')
     .required('Amount is required'),
   fromAccountID: yup.string()
-    .min(5, 'Invalid Account Number')
-    .max(10, 'Invalid Account Number')
-    .matches(/^[0-9]+$/, "Invalid Account Number")
     .required('Account number is required'),
   toAccountID: yup.string()
     .min(5, 'Invalid Account Number')

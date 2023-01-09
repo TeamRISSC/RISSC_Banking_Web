@@ -51,9 +51,18 @@ function Transfer() {
               value={values.fromAccountID}
               onChange={handleChange}
               onBlur={handleBlur}>
+              <option>Select Account</option>
             {accounts?.map((account) => (
               <option key={account.accountNumber} value={account.accountNumber}>{account.accountNumber}</option>))}
           </select>
+          {touched.fromAccountID 
+            ? 
+              errors.fromAccountID 
+              ? <p className="error">{errors.fromAccountID}</p> 
+              : <CheckCircleIcon className='icon'/>
+            :
+            null
+          }
         </div>
 
         <div className="input-holder">
