@@ -2,6 +2,7 @@ import "./transfer.scss"
 import React from 'react'
 import {useFormik} from 'formik'
 
+import {currency} from '../../../helpers/formatters'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { transferSchema } from "../../../schemas/transferSchema";
 import popAction from "../../../helpers/popAction";
@@ -27,7 +28,7 @@ function Transfer() {
 		onSubmit: (values)=> { 
       popAction(
         'Are you sure?', 
-        `$${values.amount} will be tranfered from account ${values.fromAccountID} to account ${values.toAccountID}`,
+        `${currency(values.amount)} will be tranfered from account ${values.fromAccountID} to account ${values.toAccountID}`,
         'Proceed',
         ()=>apiCrud(`/api/transfer`, 'POST', 'Successful transaction', {
           fromAccountID: values.fromAccountID,

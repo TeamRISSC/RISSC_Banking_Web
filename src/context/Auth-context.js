@@ -26,7 +26,7 @@ export function AuthProvider({children}) {
 
   function signOut() {    
     localStorage.removeItem('jwt')
-    localStorage.removeItem('auth')
+    setLocalStorage('auth', {})
     setAuth({})
     popAlert(`See you soon`)
     navigate('/')

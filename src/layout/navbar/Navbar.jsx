@@ -22,7 +22,7 @@ function Navbar(props) {
       <div className="wrapper">
 
         <div className="displayname">
-          <p>{(role === "manager" ? "Manager " : "") + data?.name}</p>
+          <p>{(role === "manager" ? "Manager " : "") + (data ? data.name : "")}</p>
         </div>
 
         <div className="items">

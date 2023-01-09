@@ -28,7 +28,7 @@ function LateInstallments() {
       field: 'installmentNumber', headerName: 'Installment No', minWidth: 70, flex: 1
     },
     { 
-      field: 'status', headerName: 'status', minWidth: 130, flex: 1
+      field: 'status', headerName: 'Status', minWidth: 130, flex: 1
     },
   ];
 

@@ -10,10 +10,12 @@ import Customers from "./Customers/Customers";
 import Overview from "./Overview/Overview";
 import Accounts from "./Accounts/Accounts";
 import FixedDeposits from "./FixedDeposits/FixedDeposits";
+import LateInstallments from "./LateInstallments/LateInstallments";
 import Loans from "./Loans/Loans";
+import LoanRequest from "./LoanRequest/LoanRequest";
+import OnlineLoans from "./OnlineLoans/OnlineLoans";
 import Transactions from "./Transactions/Transactions";
 import CustomerDetails from "./Customers/CustomerDetails/CustomerDetails";
-import LateInstallments from "./LateInstallments/LateInstallments";
 
 function AdminPanel() {
   // control the responsive sidebar
@@ -60,6 +62,8 @@ function AdminPanel() {
             <Route path="/accounts" element={<Accounts />} />
             <Route path="/fixed-deposits" element={<FixedDeposits />} />
             <Route path="/loans" element={<Loans />} />
+            <Route path="/loan-request" element={<LoanRequest />} />
+            <Route path="/onlineloans" element={<OnlineLoans />} />
             <Route path="/transactions" element={<Transactions />} />
             {role === "manager" && <Route path="/lateinstallments" element={<LateInstallments />} />}
           </Routes>

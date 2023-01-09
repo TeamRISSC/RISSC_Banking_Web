@@ -11,22 +11,8 @@ import { theme } from './theme';
 import axios from "axios";
 
 const queryClient = new QueryClient()
-
 const pkg = require("../package.json");
-
-axios.get(pkg.localhost)
-      .then((res) => {
-          if(res.status === 200) {
-            axios.defaults.baseURL = pkg.localhost;
-            console.log('localhost exists')
-          }
-          else {
-            axios.defaults.baseURL = pkg.remote;
-            console.log('localhost does not exist')
-          }})
-      .catch((err) => {            
-            axios.defaults.baseURL = pkg.remote;
-            console.log('localhost does not exist')})
+axios.defaults.baseURL = pkg.localhost;
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
