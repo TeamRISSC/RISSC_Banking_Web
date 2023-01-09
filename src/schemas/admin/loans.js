@@ -26,7 +26,7 @@ export function loansRows(loans) {
     {
         id: loan.ID,
         applyDate: date(loan.applyDate),
-        approveDate: date(loan.approveDate),
+        approveDate: loan.approveDate ? date(loan.approveDate) : "Pending approval",
         amount: currency(loan.amount),
         period: `${loan.timePeriod} years`,
         isApproved : loan.isApproved === 1 ? "Approved" : "Pending"
