@@ -5,9 +5,6 @@ export const onlineLoansColumns = [
       field: 'id', headerName: 'Loan ID', minWidth: 50, flex: 0.5
     },
     { 
-      field: 'linkedAccountID', headerName: 'Linked Account No', minWidth: 70, flex: 1
-    },
-    { 
       field: 'applyDate', headerName: 'Apply Date', type: 'date' , minWidth: 100, flex: 1
     },
     { 
@@ -15,6 +12,12 @@ export const onlineLoansColumns = [
     },
     { 
       field: 'period', headerName: 'Time Period', minWidth: 70, flex: 1
+    },
+    { 
+      field: 'FDID', headerName: 'Linked Fixed Deposit', minWidth: 70, flex: 1
+    },
+    { 
+      field: 'linkedAccountID', headerName: 'Linked Account', minWidth: 70, flex: 1
     },
   ];
  
@@ -25,7 +28,8 @@ export function onlineLoansRows(loans) {
         applyDate: date(loan.applyDate),
         amount: currency(loan.amount),
         period: `${loan.timePeriod} years`,
-        linkedAccountID: loan.linkedAccountID
+        linkedAccountID: loan.linkedAccountID,
+        FDID: loan.FDID
     }
     ))
     return rows
