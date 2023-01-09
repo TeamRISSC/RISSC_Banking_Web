@@ -10,6 +10,7 @@ export const loanRequestSchema = yup.object({
     .required('Amount is required'),
   timePeriod: yup.number()
     .positive('Enter a vaild time period')
+    .max(5,'Maximum time period is 5 years')
     .integer('Time period cannot be a decimal')
     .required('Time period is required'),
   interestRate: yup.number()
@@ -18,7 +19,7 @@ export const loanRequestSchema = yup.object({
   loanPurpose: yup.string()
     .required('Loan purpose is required'),
   linkedAccountID: yup.string()
-    .min(10, 'Minimum  characters allowed are 11')
-    .max(10, 'Maximum characters allowed are 11')
+    .min(5, 'Minimum  characters allowed is 5')
+    .max(5, 'Maximum characters allowed is 5')
     .required('Account number is required'),
 })
