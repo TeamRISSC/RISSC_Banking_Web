@@ -27,7 +27,7 @@ function LoanRequest() {
         'Are you sure?', 
         `A loan request of ${currency(values.amount)} will be created for customer ${values.customerID}`,
         'Proceed',
-        ()=>apiCrud(`/api/transfer`, 'POST', 'Successful transaction', {
+        ()=>apiCrud(`/api/employee/createLoanRequest`, 'POST', 'Loan request created successfully', {
           branchID : values.branchID,
           customerID : values.customerID,
           amount : values.amount,
