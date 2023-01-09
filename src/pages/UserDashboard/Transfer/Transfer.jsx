@@ -2,7 +2,7 @@ import "./transfer.scss"
 import React from 'react'
 import {useFormik} from 'formik'
 
-import {currency} from '../../../helpers/formatters'
+import {currency, sqlDate} from '../../../helpers/formatters'
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { transferSchema } from "../../../schemas/transferSchema";
 import popAction from "../../../helpers/popAction";
@@ -21,7 +21,6 @@ function Transfer() {
 			fromAccountID: '',
 			amount: '',
 			toAccountID: '',
-      date: '',
       remarks: '',
 		},
 		validationSchema: transferSchema,
@@ -34,7 +33,7 @@ function Transfer() {
           fromAccountID: values.fromAccountID,
           amount: values.amount,
           toAccountID: values.toAccountID,
-          date: new Date().toISOString().slice(0, 10),
+          date: sqlDate(new Date()),
           remarks: values.remarks,
         })()
       )
@@ -53,7 +52,7 @@ function Transfer() {
               onChange={handleChange}
               onBlur={handleBlur}>
             {accounts?.map((account) => (
-              <option value={account.accountNumber}>{account.accountNumber}</option>))}
+              <option key={account.accountNumber} value={account.accountNumber}>{account.accountNumber}</option>))}
           </select>
         </div>
 
