@@ -9,7 +9,7 @@ import { loansColumns, loansRows } from "../../../schemas/admin/loans";
 import useGetLoans from '../../../hooks/queries/admin/useGetLoans'
 import popAction from "../../../helpers/popAction";
 import apiCrud from "../../../api/apiCrud";
-import { date } from "../../../helpers/formatters";
+import { sqlDate } from "../../../helpers/formatters";
 import { AuthContext } from "../../../context/Auth-context";
 
 function Loans() {
@@ -37,7 +37,7 @@ function Loans() {
             'Approve',
             ()=>apiCrud(`/api/manager/approveLoan`, 'POST', 'Loan approved', {
               loanID: params.row.id,
-              approveDate: date(new Date()),
+              approveDate: sqlDate(new Date()),
             })()
             )}>
           Approve

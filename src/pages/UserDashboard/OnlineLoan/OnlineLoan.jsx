@@ -2,7 +2,7 @@ import "./onlineloan.scss"
 import React from 'react'
 import {useFormik} from 'formik'
 
-import { date } from "../../../helpers/formatters";
+import { sqlDate } from "../../../helpers/formatters";
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { onlineLoanSchema } from "../../../schemas/onlineLoanSchema";
@@ -30,7 +30,7 @@ function OnlineLoan() {
         ()=>apiCrud(`/api/createOnlineLoan`, 'POST', 'Successful transaction', {
           FDID: values.FDID,
           amount: values.amount,
-          applyDate: date(new Date()),
+          applyDate: sqlDate(new Date()),
           timePeriod: values.timePeriod,
         })()
       )

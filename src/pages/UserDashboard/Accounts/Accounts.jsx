@@ -72,7 +72,7 @@ function Accounts() {
       field: 'interestRate', headerName: 'Interest Rate', minWidth: 80, flex: 1
     },
     { 
-      field: 'matuarityDate', headerName: 'Maturity Date', minWidth: 100, flex: 1
+      field: 'maturityDate', headerName: 'Maturity Date', minWidth: 100, flex: 1
     },
   ];
 
@@ -84,7 +84,7 @@ function Accounts() {
       amount: currency(fd.amount),
       period: `${fd.period} years`,
       interestRate: `${fd.interestRate}%`,
-      matuarityDate: date(fd.maturityDate),
+      maturityDate: date(fd.maturityDate),
     }
   ))
 

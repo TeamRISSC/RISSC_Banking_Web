@@ -2,7 +2,7 @@ import "./loanrequest.scss"
 import React from 'react'
 import {useFormik} from 'formik'
 
-import { currency, date } from "../../../helpers/formatters";
+import { currency, sqlDate } from "../../../helpers/formatters";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { loanRequestSchema } from "../../../schemas/loanRequestSchema";
 import popAction from "../../../helpers/popAction";
@@ -31,7 +31,7 @@ function LoanRequest() {
           branchID : values.branchID,
           customerID : values.customerID,
           amount : values.amount,
-          applyDate : date(new Date()),
+          applyDate : sqlDate(new Date()),
           timePeriod : values.timePeriod,
           interestRate : values.interestRate,
           loanType : values.loanPurpose,
