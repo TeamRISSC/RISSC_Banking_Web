@@ -18,7 +18,6 @@ function OnlineLoan() {
 		initialValues: {
 			FDID: '',
 			amount: '',
-      applyDate: '',
       timePeriod: '',
 		},
 		validationSchema: onlineLoanSchema,
@@ -49,7 +48,7 @@ function OnlineLoan() {
               onChange={handleChange}
               onBlur={handleBlur}>
               {fixed_deposits?.map((fixed_deposit) => (
-                <option value={fixed_deposit.ID}>{fixed_deposit.ID}</option>))}
+                <option key={fixed_deposit.ID} value={fixed_deposit.ID}>{fixed_deposit.ID}</option>))}
           </select>
         </div>
 

@@ -19,7 +19,8 @@ export const loanRequestSchema = yup.object({
   loanPurpose: yup.string()
     .required('Loan purpose is required'),
   linkedAccountID: yup.string()
-    .min(5, 'Minimum  characters allowed is 5')
-    .max(5, 'Maximum characters allowed is 5')
+    .min(5, 'Invalid Account Number')
+    .max(10, 'Invalid Account Number')
+    .matches(/^[0-9]+$/, "Invalid Account Number")
     .required('Account number is required'),
 })
