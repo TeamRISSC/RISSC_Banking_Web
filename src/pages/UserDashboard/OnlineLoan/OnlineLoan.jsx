@@ -47,9 +47,18 @@ function OnlineLoan() {
               value={values.FDID}
               onChange={handleChange}
               onBlur={handleBlur}>
+              <option>Select Fixed Deposit</option>
               {fixed_deposits?.map((fixed_deposit) => (
                 <option key={fixed_deposit.ID} value={fixed_deposit.ID}>{fixed_deposit.ID}</option>))}
           </select>
+          {touched.FDID 
+            ? 
+              errors.FDID 
+              ? <p className="error">{errors.FDID}</p> 
+              : <CheckCircleIcon className='icon'/>
+            :
+            null
+          }
         </div>
 
         <div className="input-holder">

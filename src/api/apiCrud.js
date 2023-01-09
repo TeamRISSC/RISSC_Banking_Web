@@ -22,8 +22,13 @@ async function apiCrud(url, method, message, data, action) {
     (error) => {
       if (error.response) {
         // Request made and server responded
-        console.log(error)
-        popAlert(error.response.data.error, 'error')
+        if (error.response.data.message){
+          popAlert(error.response.data.message, 'info')
+        }
+        else{
+          popAlert(error.response.data.error, 'error')
+        }
+        
       } else if (error.request) {
         // The request was made but no response was received
         console.log(error.request)
