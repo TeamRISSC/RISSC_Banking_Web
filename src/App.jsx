@@ -10,24 +10,6 @@ import { AuthContext } from "./context/Auth-context";
 
 function App() {
   const { role, jwt } = useContext(AuthContext);
-  // console.log(jwt)
-  
-  // const pkg = require("../package.json");
-
-  // axios.get(pkg.localhost)
-  //       .then((res) => {
-  //           if(res.status === 200) {
-  //             axios.defaults.baseURL = pkg.localhost;
-  //             console.log('localhost exists')
-  //           }
-  //           else {
-  //             axios.defaults.baseURL = pkg.remote;
-  //             console.log('localhost does not exist')
-  //           }})
-  //       .catch((err) => {            
-  //             axios.defaults.baseURL = pkg.remote;
-  //             console.log('localhost does not exist')})
-
   return (
     <div className="App">
       {jwt ? (

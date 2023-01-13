@@ -7,6 +7,7 @@ import useGetUserCurrentAccounts from "../../../hooks/queries/users/useGetUserCu
 import useGetUserLoans from "../../../hooks/queries/users/useGetUserLoans";
 import useGetUserOnlineLoans from "../../../hooks/queries/users/useGetUserOnlineLoans";
 import useGetUserTransactions from "../../../hooks/queries/users/useGetUserTransactions";
+import { currency } from "../../../helpers/formatters";
 
 function Overview() {
 
@@ -42,14 +43,7 @@ function Overview() {
     return {monthlyInflow, monthlyOutflow};
   }
 
-  const currency = (value) => {
-    const formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'LKR'});
-    return formatter.format(value).replace("LKR", "Rs.")
-  };
-
-  return (
+   return (
     <div className='overview'>
 
       <h2>Overview</h2>
