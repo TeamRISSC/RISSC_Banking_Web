@@ -11,6 +11,7 @@ import Transactions from "./Transactions/Transactions";
 import Loans from "./Loans/Loans";
 import Transfer from "./Transfer/Transfer";
 import OnlineLoan from "./OnlineLoan/OnlineLoan";
+import LoanInstallments from "./Loans/LoanInstallments/LoanInstallments";
 
 function UserDashboard() {
   // control the responsive sidebar
@@ -54,6 +55,7 @@ function UserDashboard() {
             <Route path="/" element={<Overview />} />
             <Route path="/accounts" element={<Accounts />} />
             <Route path="/loans" element={<Loans />} />
+            <Route path="/loans/:loanID" element={<LoanInstallments />} />
             <Route path="/transactions" element={<Transactions />} />
             <Route path="/transfer" element={<Transfer />} />
             <Route path="/onlineloan" element={<OnlineLoan />} />

@@ -1,8 +1,8 @@
-@import '../../../scss/layout/colors';
-@import '../../../scss/utilities/variables';
-@import '../../../scss/utilities/mixins';
+@import '../../../../scss/layout/colors';
+@import '../../../../scss/utilities/variables';
+@import '../../../../scss/utilities/mixins';
 
-.loans {
+.transactions {
   z-index: 10;
   color: $clr-dark;
   display: flex;
@@ -18,30 +18,8 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1em;
-    
-    .loan-actions {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    padding: 1em;
-    width: max-content;
-
-      button {
-        @include slideSolidBtn;
-        border-radius: 20px;
-        font-size: 1rem;
-        width: fit-content;
-        height: fit-content;
-      }
   }
-}
 
-p {
-  align-self: start;
-  margin-left: 5em;
-}
   .table-container {
     flex-grow: 1;
     display: flex;
