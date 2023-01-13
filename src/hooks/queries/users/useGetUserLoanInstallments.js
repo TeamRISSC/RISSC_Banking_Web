@@ -8,7 +8,7 @@ const useGetUserLoanInstallments = async (loanID, type) => {
     headers: {
       "Authorization": `Bearer ${localStorage.jwt}`,
     },
-    data: {
+    params: {
       loanID: loanID,
       loanType: type, 
     },

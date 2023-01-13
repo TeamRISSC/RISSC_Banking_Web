@@ -3,13 +3,14 @@ import { useParams, useLocation } from 'react-router-dom'
 import { DataGrid } from '@mui/x-data-grid';
 
 import { currency, date } from "../../../../helpers/formatters";
-import useGetUserLoanInstallments from "../../../../hooks/queries/users/useGetUserLoanInstallments";
+import useApi from "../../../../hooks/useApi";
 
 function LoanInstallments() {
   const params = useParams();
   const { state: loanData } = useLocation();
 
-  const {data: installments} = useGetUserLoanInstallments(params.loanID, loanData.type);
+  const { data: installmentsData } = useApi("/api/loaninstallments", "POST", false, {loanID: params.loanID, loanType: loanData.type})
+  const installments = installmentsData?.installments;
 
   const installmentsColumns = [
     { 
@@ -28,6 +29,7 @@ function LoanInstallments() {
 
   const installmentsRows = installments?.map(installment => (
     { 
+        id: installment.ID,
         payment: currency(installment.payment),
         date: date(installment.date),
         installmentNumber: installment.installmentNumber,
@@ -39,7 +41,7 @@ function LoanInstallments() {
     <div className="transactions">
 
       <div className="title">
-        <h2>Loan {params.loanID} Installments</h2>
+        <h2>Installments - {(loanData.type === "loan" ? "Loan " : "Online Loan ") + params.loanID} </h2>
       </div>
 
       <div style={{ height: 700, width: '90%' }}>
