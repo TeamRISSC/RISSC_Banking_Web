@@ -13,7 +13,7 @@ import useGetUserSavingsAccounts from "../../../hooks/queries/users/useGetUserCu
 function Transfer() {
   const {data: s_accounts} = useGetUserSavingsAccounts();
   const {data: c_accounts} = useGetUserCurrentAccounts();
-  const accounts = c_accounts && s_accounts.concat(c_accounts).sort((a, b) => +a.accountNumber - +b.accountNumber);;
+  const accounts = (s_accounts && c_accounts) && s_accounts.concat(c_accounts).sort((a, b) => +a.accountNumber - +b.accountNumber);;
 
   // handle user inputs
 	const { values, errors, touched, handleBlur, handleChange, handleSubmit} = useFormik({
