@@ -4,7 +4,7 @@ import axios from "axios";
 const useGetLoans = async () => {
 
   const { data } = await axios({
-    url: '/api/manager/lateinstallments/late/',
+    url: '/api/manager/installments/late/',
     method: 'GET',
     headers: {
       "Authorization": `Bearer ${localStorage.jwt}`

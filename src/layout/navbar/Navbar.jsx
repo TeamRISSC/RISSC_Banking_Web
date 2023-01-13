@@ -4,7 +4,6 @@ import './navbar.scss'
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import FullscreenExitOutlinedIcon from '@mui/icons-material/FullscreenExitOutlined';
-import ListOutlinedIcon from '@mui/icons-material/ListOutlined';
 import useApi from '../../hooks/useApi';
 import { AuthContext } from "../../context/Auth-context";
 
@@ -35,9 +34,6 @@ function Navbar(props) {
           </div>
           <div className="item">
             <FullscreenExitOutlinedIcon/>
-          </div>
-          <div className="item">
-            <ListOutlinedIcon/>
           </div>
         </div>
 
